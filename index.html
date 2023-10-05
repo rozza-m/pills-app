@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- Required meta tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Pill tracker</title>
+        <meta name="description" content="">
+        <link rel="stylesheet" href="./resources/reset.css" type="text/css">
+        <link rel="stylesheet" href="./css/pilltracker.css" type="text/css">
+        <link rel="stylesheet" href="./css/icons.css" type="text/css">
+        <script type="text/javascript">
+
+            // Initialize the service worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then((registration) => {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch((error) => {
+                    console.log('Service Worker registration failed:', error);
+                    });
+                });
+            }
+        </script>
+        <meta name="robots" content="noindex">
+    </head>
+    <body>
+        <div id="contents-container">
+            <div id="grid">
+                <div class="pill" id="Paracetamol">
+                    <div class="icon popped"></div>
+                    <div class="box">
+                        <div class="titlegroup">
+                            <header>Paracetamol</header>
+                            <article>Don't take any more until</article>
+                            <time>00:00</time>
+                        </div>
+                        <div class="poppedgroup">
+                            <div class="timeselect">
+                                <div class="date">
+                                    <div class="leftselector"></div>
+                                    <div class="rightselector"></div>
+                                    <div class="spinnercontent" data-day-offset="0">Today</div>
+                                </div>
+                                <div class="timespinner">
+                                    <div class="hour">
+                                        <div class="upselector"></div>
+                                        <div class="downselector"></div>
+                                        <div class="spinnercontent">00</div>
+                                    </div>
+                                    <div class="minute">
+                                        <div class="upselector"></div>
+                                        <div class="downselector"></div>
+                                        <div class="spinnercontent">00</div>
+                                    </div>
+                                    <div class="ampm pm">
+                                        <div class="amselector">am</div>
+                                        <div class="pmselector">pm</div>
+                                        <div class="ampmselected"></div>
+                                    </div>
+                                </div>
+                                <button class="submit">+ record dose</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pill" id="Ibuprofen">
+                    <div class="icon"></div>
+                    <div class="box">
+                        <div class="titlegroup">
+                            <header>Ibuprofen</header>
+                            <article>Last taken at</article>
+                            <time>00:00</time>
+                        </div>
+                        <div class="poppedgroup">
+                            <div class="timeselect">
+                                <div class="date">
+                                    <div class="leftselector"></div>
+                                    <div class="rightselector"></div>
+                                    <div class="spinnercontent" data-day-offset="0">Today</div>
+                                </div>
+                                <div class="timespinner">
+                                    <div class="hour">
+                                        <div class="upselector"></div>
+                                        <div class="downselector"></div>
+                                        <div class="spinnercontent">00</div>
+                                    </div>
+                                    <div class="minute">
+                                        <div class="upselector"></div>
+                                        <div class="downselector"></div>
+                                        <div class="spinnercontent">00</div>
+                                    </div>
+                                    <div class="ampm">
+                                        <div class="amselector">am</div>
+                                        <div class="pmselector">pm</div>
+                                    </div>
+                                </div>
+                                <button class="submit">+ record dose</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pill" id="Oramorph">
+                    <div class="icon"></div>
+                    <div class="box">
+                        <div class="titlegroup">
+                            <header>Oramorph</header>
+                            <article>Don't take any more until</article>
+                            <time>00:00</time>
+                        </div>
+                        <div class="poppedgroup">
+                            <div class="timeselect">
+                                <div class="date">
+                                    <div class="leftselector"></div>
+                                    <div class="rightselector"></div>
+                                    <div class="spinnercontent" data-day-offset="0">Today</div>
+                                </div>
+                                <div class="timespinner">
+                                    <div class="hour">
+                                        <div class="upselector"></div>
+                                        <div class="downselector"></div>
+                                        <div class="spinnercontent">00</div>
+                                    </div>
+                                    <div class="minute">
+                                        <div class="upselector"></div>
+                                        <div class="downselector"></div>
+                                        <div class="spinnercontent">00</div>
+                                    </div>
+                                    <div class="ampm">
+                                        <div class="amselector">am</div>
+                                        <div class="pmselector">pm</div>
+                                    </div>
+                                </div>
+                                <button class="submit">+ record dose</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="mask" class=""></div>
+
+            </div>
+            <div id="history" class="">
+                <header>History</header>
+                <div id="sharehistory" class="buttonrow"><button id="sharebutton">Send via email</button></div>
+                <ol>
+                    <li><span class="drug">Paracetamol</span> <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
+                    <li><span class="drug">Ibuprofen</span>   <span class="takentext">taken at</span> <time>7:04</time>  <span class="duration">(2h 16m)</span></li>
+                    <li><span class="drug">Oramorph</span>    <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
+                    <li><span class="drug">Paracetamol</span> <span class="takentext">taken at</span> <time>7:04</time>  <span class="duration">(6h 32m)</span></li>
+                    <li><span class="drug">Ibuprofen</span>   <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
+                    <li><span class="drug">Ibuprofen</span>   <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
+                    <li><span class="drug">Oramorph</span>    <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(4h 1m)</span></li>
+                    <li><span class="drug">Paracetamol</span> <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
+                    <li><span class="drug">Oramorph</span>    <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
+                    <li><span class="drug">Ibuprofen</span>   <span class="takentext">taken at</span> <time>7:04</time>  <span class="duration">(6h 32m)</span></li>
+                    <li><span class="drug">Paracetamol</span> <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
+                    <li><span class="drug">Ibuprofen</span>   <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
+                    <li><span class="drug">Oramorph</span>    <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
+                    
+                    
+                    
+                </ol>
+                <div id="deletehistory" class="buttonrow"><button id="deletebutton">Delete history</button></div>
+
+            </div>
+        </div>
+    </body>
+    <!-- <script type="text/javascript" src="js/umd.js"></script> -->
+    <script type="text/javascript" src="js/ui.js"></script>
+    <script type="text/javascript" src="js/db.js"></script>
+</html>
