@@ -31,13 +31,6 @@ request.onupgradeneeded = function(event) {
     console.log('system object store already exists.');
   }
 
-  // // for now, pill types will just be hard coded.
-  //
-  // if (!db.objectStoreNames.contains('pillTypes')) {
-  //   const objectStore = db.createObjectStore('pillTypes', { keyPath: 'name' });
-  //   console.log('Created pillTypes object store.');
-  // }
-
   if (!db.objectStoreNames.contains('history')) {
     db.createObjectStore('history', { keyPath: 'timestamp' });
     console.log('Created history object store.');
@@ -98,7 +91,6 @@ function canTakePill(pill) {
   
   const currentTimestamp = new Date();
   const fourHoursInMilliseconds = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
-  const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
   const pillHistorySummary = {}; // This is the return object
   const pillHistorySummaryLastPill = {}; // for the first check

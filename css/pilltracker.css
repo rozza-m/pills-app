@@ -140,7 +140,7 @@ div#grid {
 
 .pill.popped {
    z-index:2;
-   height: 50vh;
+   height: 55vh;
    top: 30vh !important;
 }
 .popped .icon {

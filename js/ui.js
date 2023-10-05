@@ -291,6 +291,7 @@ function updatePillStatus() {
     pills.forEach((pill) => {
       const pillType = pill.id;
       const articleElement = pill.querySelector('.titlegroup article');
+      const articleReason = pill.querySelector('.poppedgroup subheading');
   
       canTakePill(pillType)
         .then((result) => {
@@ -298,13 +299,15 @@ function updatePillStatus() {
             var timeAgo = new Date() - result.lastTakenAt;
             
             articleElement.textContent = 'Last taken ' + formatDuration(timeAgo);
+            articleReason.textContent = '';
           } else {
-            if (result.reason === 'hourLimitReached') {
-              articleElement.textContent = 'It\'s less than 4 hours since your last dose';
-            } else {
-              articleElement.textContent = 'You\'ve had 4 or more doses in the last 24 hours';
+            articleElement.textContent = 'Advise waiting until ' + result.canTakeMoreAt.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+            if (result.reason == 'hourLimitReached') {
+                articleReason.textContent = 'Your last dose was less than 4 hours ago.';
+                } else {
+                articleReason.textContent = 'You\'ve recorded 4 or more doses in the last 24 hours.';
+                }
             }
-          }
         })
         .catch((error) => {
           console.error('Error occurred while checking pill status:', error);
@@ -320,8 +323,8 @@ function updatePillStatus() {
       return `${minutes} minutes ago`;
     } else if (hours < 24) {
       const remainingMinutes = minutes % 60;
-      return `${hours} hours ${remainingMinutes} minutes ago`;
+      return `${hours}h ${remainingMinutes}min ago`;
     } else {
-      return "more than 24 hours ago";
+      return "more than 24h ago";
     }
   }
