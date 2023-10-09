@@ -136,6 +136,7 @@ div#grid {
 
 .pill header {
     margin: auto;
+    width: moz-fit-content;
     width: fit-content;
     padding: 2vw 0;
     font-size: 5vw;
