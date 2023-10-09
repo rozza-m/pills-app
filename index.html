@@ -28,146 +28,81 @@
         <meta name="robots" content="noindex">
     </head>
     <body>
-        <div id="contents-container">
+        <dialog class="recorddose">
+            <header>--</header>
+            <div class="timeselect">
+                <div class="date">
+                    <div class="selectors">
+                        <div class="leftselector"><label>⯇</label></div>
+                        <div class="rightselector"><label>⯈</label></div>
+                    </div>
+                    <div class="content" data-day-offset="0">-</div>
+                </div>
+                <div class="timespinner">
+                    <div class="hour">
+                        <div class="selectors">
+                            <div class="upselector"><label>⯅</label></div>
+                            <div class="downselector"><label>⯆</label></div>
+                        </div>
+                        <div class="content">--</div>
+                    </div>
+                    <div class="minute">
+                        <div class="selectors">
+                            <div class="upselector"><label>⯅</label></div>
+                            <div class="downselector"><label>⯆</label></div>
+                        </div>
+                        <div class="content">--</div>
+                    </div>
+                    <div class="ampm">
+                        <div class="selector"><label>⯇&hairsp;⯈</label></div>
+                        <div class="content">--</div>
+                    </div>
+                </div>
+            </div>
+            <div class="guidance">
+                <div class="guidance-part-1">--</div>
+                <div class="guidance-part-2">--</div>
+                <div class="guidance-time">--</div>
+            </div>
+            <button class="submit"><div class="icon"></div>Record dose</button>
+        </dialog>
+
+
+
+        <header>
+            <ul>
+                <li><div class="icon" id="history-icon"></div>History</li>
+                <li><div class="icon" id="settings-icon"></div>Help & settings</li>
+            </ul>
+        </header>
+
+
+        <main>
             <div id="grid">
-                <div class="pill" id="Paracetamol">
-                    <div class="icon popped"></div>
-                    <div class="box">
-                        <div class="titlegroup">
-                            <header>Paracetamol</header>
-                            <article>Don't take any more until</article>
-                            
-                        </div>
-                        <div class="poppedgroup">
-                            <subheading></subheading>
-                            <div class="timeselect">
-                                <div class="date">
-                                    <div class="leftselector"></div>
-                                    <div class="rightselector"></div>
-                                    <div class="spinnercontent" data-day-offset="0">Today</div>
-                                </div>
-                                <div class="timespinner">
-                                    <div class="hour">
-                                        <div class="upselector"></div>
-                                        <div class="downselector"></div>
-                                        <div class="spinnercontent">00</div>
-                                    </div>
-                                    <div class="minute">
-                                        <div class="upselector"></div>
-                                        <div class="downselector"></div>
-                                        <div class="spinnercontent">00</div>
-                                    </div>
-                                    <div class="ampm pm">
-                                        <div class="amselector">am</div>
-                                        <div class="pmselector">pm</div>
-                                        <div class="ampmselected"></div>
-                                    </div>
-                                </div>
-                                <button class="submit">+ record dose</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="pill" id="Paracetamol" data-pill="Paracetamol">
+                    <div class="big-button"><div class="icon"></div></div>
+                    <header>Paracetamol</header>
+                    <article>Don't take any more until</article>
                 </div>
-                <div class="pill" id="Ibuprofen">
-                    <div class="icon"></div>
-                    <div class="box">
-                        <div class="titlegroup">
-                            <header>Ibuprofen</header>
-                            <article>Last taken at</article>
-                        </div>
-                        <div class="poppedgroup">
-                            <subheading></subheading>
-                            <div class="timeselect">
-                                <div class="date">
-                                    <div class="leftselector"></div>
-                                    <div class="rightselector"></div>
-                                    <div class="spinnercontent" data-day-offset="0">Today</div>
-                                </div>
-                                <div class="timespinner">
-                                    <div class="hour">
-                                        <div class="upselector"></div>
-                                        <div class="downselector"></div>
-                                        <div class="spinnercontent">00</div>
-                                    </div>
-                                    <div class="minute">
-                                        <div class="upselector"></div>
-                                        <div class="downselector"></div>
-                                        <div class="spinnercontent">00</div>
-                                    </div>
-                                    <div class="ampm">
-                                        <div class="amselector">am</div>
-                                        <div class="pmselector">pm</div>
-                                    </div>
-                                </div>
-                                <button class="submit">+ record dose</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="pill" id="Ibuprofen" data-pill="Ibuprofen">
+                    <div class="big-button"><div class="icon"></div></div>
+                    <header>Ibuprofen</header>
+                    <article>Don't take any more until</article>
                 </div>
-                <div class="pill" id="Oramorph">
-                    <div class="icon"></div>
-                    <div class="box">
-                        <div class="titlegroup">
-                            <header>Oramorph</header>
-                            <article>Don't take any more until</article>
-                        </div>
-                        <div class="poppedgroup">
-                            <subheading></subheading>
-                            <div class="timeselect">
-                                <div class="date">
-                                    <div class="leftselector"></div>
-                                    <div class="rightselector"></div>
-                                    <div class="spinnercontent" data-day-offset="0">Today</div>
-                                </div>
-                                <div class="timespinner">
-                                    <div class="hour">
-                                        <div class="upselector"></div>
-                                        <div class="downselector"></div>
-                                        <div class="spinnercontent">00</div>
-                                    </div>
-                                    <div class="minute">
-                                        <div class="upselector"></div>
-                                        <div class="downselector"></div>
-                                        <div class="spinnercontent">00</div>
-                                    </div>
-                                    <div class="ampm">
-                                        <div class="amselector">am</div>
-                                        <div class="pmselector">pm</div>
-                                    </div>
-                                </div>
-                                <button class="submit">+ record dose</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="pill" id="Oramorph" data-pill="Oramorph">
+                    <div class="big-button"><div class="icon"></div></div>
+                    <header>Oramorph</header>
+                    <article>Don't take any more until</article>
                 </div>
-                <div id="mask" class=""></div>
+                <div class="pill" id="Dihydrocodeine" data-pill="Dihydrocodeine">
+                    <div class="big-button"><div class="icon"></div></div>
+                    <header>Dihydrocodeine</header>
+                    <article>Don't take any more until</article>
+                </div>
+                <div id="mask" class=""></div><!-- this can be removed because dialog's ::backdrop can be used instead with some slight changes to the js. ask Bing about it, it involves .getBoundingClientRect -->
 
             </div>
-            <div id="history" class="">
-                <header>History</header>
-                <div id="sharehistory" class="buttonrow"><button id="sharebutton">Send via email</button></div>
-                <ol>
-                    <li><span class="drug">Paracetamol</span> <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
-                    <li><span class="drug">Ibuprofen</span>   <span class="takentext">taken at</span> <time>7:04</time>  <span class="duration">(2h 16m)</span></li>
-                    <li><span class="drug">Oramorph</span>    <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
-                    <li><span class="drug">Paracetamol</span> <span class="takentext">taken at</span> <time>7:04</time>  <span class="duration">(6h 32m)</span></li>
-                    <li><span class="drug">Ibuprofen</span>   <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
-                    <li><span class="drug">Ibuprofen</span>   <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
-                    <li><span class="drug">Oramorph</span>    <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(4h 1m)</span></li>
-                    <li><span class="drug">Paracetamol</span> <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
-                    <li><span class="drug">Oramorph</span>    <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
-                    <li><span class="drug">Ibuprofen</span>   <span class="takentext">taken at</span> <time>7:04</time>  <span class="duration">(6h 32m)</span></li>
-                    <li><span class="drug">Paracetamol</span> <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
-                    <li><span class="drug">Ibuprofen</span>   <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
-                    <li><span class="drug">Oramorph</span>    <span class="takentext">taken at</span> <time>15:32</time> <span class="duration">(6h 32m)</span></li>
-                    
-                    
-                    
-                </ol>
-                <div id="deletehistory" class="buttonrow"><button id="deletebutton">Delete history</button></div>
-
-            </div>
-        </div>
+        </main>
     </body>
     <!-- <script type="text/javascript" src="js/umd.js"></script> -->
     <script type="text/javascript" src="js/ui.js"></script>

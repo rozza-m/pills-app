@@ -117,7 +117,9 @@ function canTakePill(pill) {
           pillHistorySummaryLastPill.lastTakenAt = lastPillTimestamp;
         }
       } else {
-        //console.log(pill + ' not found in history');
+        console.log('    ' + pill + ' not found in history');
+        pillHistorySummaryLastPill.canTakePill = true;
+        pillHistorySummaryLastPill.lastTakenAt = null;
       }
       resolve();
     });
@@ -141,7 +143,9 @@ function canTakePill(pill) {
           pillHistorySummary24h.canTakePill = true;
         }
       } else {
-        // console.log(pill + ' not found in history');
+        console.log('    ' + pill + ' not found in history');
+        pillHistorySummary24h.canTakePill = true;
+        pillHistorySummaryLastPill.lastTakenAt = null;
       }
       resolve();
     });

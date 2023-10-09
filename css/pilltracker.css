@@ -1,421 +1,441 @@
 @font-face {
-  font-family: 'Ubuntu Bold';
-  src: url('../resources/Ubuntu-bold.ttf') format('truetype');
+  font-family: 'Sora';
+  src: url('../resources/Sora.ttf') format('truetype');
 }
 
-@font-face {
-  font-family: 'Ubuntu Light';
-  src: url('../resources/Ubuntu-Light.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Ubuntu Medium';
-  src: url('../resources/Ubuntu-Medium.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Ubuntu Regular';
-  src: url('../resources/Ubuntu-Regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Ubuntu Condensed Regular';
-  src: url('../resources/UbuntuCondensed-Regular.ttf') format('truetype');
-}
 :root {
-  --main-bg-color: #c9bbe7;
-  --pill-height: 16vh;
-  --pill-width: 80vw;
-  --pill-height-margin:2vh;
---top-pill-top: 20vh;
+  --invert: #FFFFFFFF;
+  --primary-1: #614E89FF;
+  --primary-1-light: #E5DBFBFF;
+  --primary-1-dark: #392A58FF;
+  --primary-2: #FF889EFF;
+  --primary-2-light: #FFD4DCFF;
+  --default: #000000FF;
+  --drug-paracetamol: #88B8FFFF;
+  --drug-biscuit: #E19F79FF;
+  --drug-dihydrocodeine: #7fd5d8;
+  --drug-enaxaparin: #FFE588FF;
+  --drug-iron: #FF756CFF;
+  --drug-ibuprofen: #FF889EFF;
+  --tertiary-yes: #57FA57FF;
+  --tertiary-no: #FA5757FF;
 }
+
+:root {
+  --settings-icon: url(
+  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path fill-rule="evenodd" d="M24 .6A3 3 0 0 1 27 .2c2.1.8 4.2 2 6 3.5a3 3 0 0 1 1 2.6 7 7 0 0 0 .8 4.2c.7 1.1 1.6 2 2.8 2.6l.5.2a3 3 0 0 1 1.7 2.3c.4 2.2.4 4.6 0 6.8a3 3 0 0 1-1.5 2.1l-.2.2a7 7 0 0 0-3.3 2.8 7 7 0 0 0-.8 4.2c0 1-.2 2-1 2.6a20 20 0 0 1-6 3.5 3 3 0 0 1-2.8-.4c-1.3-.9-2.6-1.4-4.1-1.4s-2.8.5-4 1.4a3 3 0 0 1-2.9.4 20 20 0 0 1-6-3.5 3 3 0 0 1-1-2.6 7 7 0 0 0-.8-4.2c-.7-1.1-1.6-2-2.8-2.6l-.4-.2a3 3 0 0 1-1.8-2.3c-.4-2.2-.4-4.6 0-6.8a3 3 0 0 1 1.5-2.1l.3-.2a7 7 0 0 0 3.2-2.8A7 7 0 0 0 6 6.3a3 3 0 0 1 1-2.6 20 20 0 0 1 6-3.5 3 3 0 0 1 2.8.4C17.2 1.5 18.6 2 20 2s2.8-.5 4-1.4zm2 3.6a10.9 10.9 0 0 1-12 0 16 16 0 0 0-3.9 2.2c.2 2-.2 4.2-1.4 6.1-1 2-2.7 3.3-4.5 4.3-.2 1.4-.2 3 0 4.4a10.8 10.8 0 0 1 6 10.4 16 16 0 0 0 3.8 2.2c1.8-1.1 3.8-1.8 6-1.8s4.3.7 6 1.8a16 16 0 0 0 3.9-2.2c-.2-2 .3-4.2 1.4-6.1 1-2 2.7-3.3 4.5-4.3.3-1.4.3-3 0-4.4a10.9 10.9 0 0 1-6-10.4A16 16 0 0 0 26 4.2zM20 11a8 8 0 1 1 0 16 8 8 0 0 1 0-16zm0 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" clip-rule="evenodd"/></svg>');
+  --history-icon: url(
+  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M37.3 10a20 20 0 0 1-32 23.6 2 2 0 0 1 3-2.7 16 16 0 1 0-4.1-13l2.5-.7c2.1-.6 3.6 2 2.2 3.5L4.4 26a2.2 2.2 0 0 1-3.8-1 20 20 0 0 1 36.7-15zM20 8a2 2 0 0 1 2 2v9.2l5.4 5.4a2 2 0 1 1-2.8 2.8l-6-6A2 2 0 0 1 18 20V10a2 2 0 0 1 2-2z"/></svg>');
+  --plus-icon: url('data:image/svg+xml,<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 1C16.7909 1 15 2.79086 15 5V15H5C2.79086 15 1 16.7909 1 19V25C1 27.2091 2.79086 29 5 29H15V39C15 41.2091 16.7909 43 19 43H25C27.2091 43 29 41.2091 29 39V29H39C41.2091 29 43 27.2091 43 25V19C43 16.7909 41.2091 15 39 15H29V5C29 2.79086 27.2091 1 25 1H19Z" fill="white" stroke="black" stroke-width="2"/></svg>');
+}
+
+@keyframes rotate-in {
+  0% { transform:rotate(-360deg);
+     }
+  100% { transform:rotate(0);
+       }
+}
+@keyframes fade-down {
+  0% { transform:translateY(0);
+       opacity:100%;
+     }
+  100% { transform:translateY(30vh);
+       opacity:0;
+       }
+}
+@keyframes fade-up {
+  0% { transform:translateY(30vh);
+       opacity:0%;
+     }
+  100% { transform:translateY(0);
+       opacity:100%;
+       }
+}
+
+#history-icon {
+    -webkit-mask: var(--history-icon);
+}
+#history-icon {
+    -webkit-mask: var(--history-icon);
+}
+
 body {
-    background: var(--main-bg-color);
-    div#grid;
-    /* border: 1px solid red; */
-    /* height: 70vh; */
-    font-family:ubuntu,sans-serif;
-}
-div#grid {
-    /* border: 1px solid #1200ff; */
-    /* height: 70vh; */
-    /* margin:auto; */
-    /* top: 50%; */
-    /* transform: translateY(-50%); */
-    /* position: absolute; */
-    /* margin-top: 15vh; */
-}
-
-.pill{
-  height:var(--pill-height);
-  /* margin:3vh calc((100vw - var(--pill-width))/2); */
-  position: absolute;
-  width: var(--pill-width);
-  left: calc(50% - var(--pill-width) / 2);
-  filter: drop-shadow(0 .8vh .5vh #fffa) drop-shadow(0vw -.8vh .5vh #8677a66b);
-  transition: 0.3s all;
-}
-
-.pill#Paracetamol{
-  top: var(--top-pill-top);
-}
-.pill#Ibuprofen{
-  top: calc(var(--top-pill-top) + var(--pill-height) + var(--pill-height-margin));
-}
-.pill#Oramorph{
-  top: calc(var(--top-pill-top) + var(--pill-height) * 2 + var(--pill-height-margin) * 2);
-}
-
-.icon {
-    height: var(--pill-height);
-    display: block;
-    width: var(--pill-height);
-    position: absolute;
-    border: 0.5vh solid black;
-    box-sizing: border-box;
-    border-radius: calc(var(--pill-height)/2);
-    z-index:2;
-    position: relative;
-}
-.pill .box{
-    position:absolute;
-    left: calc(var(--pill-height)/2);
-    /* padding-left: calc(-2vw + var(--pill-height)/2); */
-    /* padding-right: 2vw; */
-    border: 0.5vh solid black;
-    right:0;
-    bottom:var(
-    --pill-height-margin);
-    top:var(
-    --pill-height-margin);
-    border-radius: 4vh;
-    box-sizing:border-box;
     overflow: hidden;
-}
-.pill .box, .icon {
-  background: #eee;
-  box-shadow: 0 .5vh .5vh #fff inset, 0 -.5vh .5vh #0003 inset;
-  transition: all 0.2s;
-}
-.pill .titlegroup {
-  /* padding-left: calc(-2vw + var(--pill-height)/2); */
-  width: calc(var(--pill-width) - var(--pill-height) + 2vw);
-  /* width: 100%; */
-  right: 0vw;
-  position: absolute;
-}
-.pill:not(.popped):active .icon, .pill:not(.popped):active .box, .pill:not(.popped):active .icon {
-  box-shadow: 0 -.5vh .5vh #fff inset, 0 .5vh .5vh #0003 inset;
-  transform: translateY(0.2vh);
-}
-.pill.no .icon, .pill.no .box {
-      box-shadow: -5px 5px red inset, -5px -5px red inset, 5px 5px red inset, 5px -5px red inset;
+    font-family: 'Sora', 'Ubuntu', 'Sans-Serif';
+    height: 100vh;
 }
 
-.box *{
-  text-align: center;
-  display:block;
+main {
+    /* position: absolute; */
+    background-color: var(--primary-1);
+    /* height: 88vh; */
+    /* bottom: 100%; */
+    /* top: 0; */
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 4vh;
+    border-top-right-radius: 4vh;
 }
 
-.box header {
-    font-size: calc( min( 5.9vw , 2.8vh));
-    letter-spacing: -0.15vh;
-    font-weight: 800;
-    padding-top: 0.8vh;
+body > header {
+    height: 11vh;
+    /* border: 1px solid red; */
+    font-size: 1.4vh;
+    color: var(--primary-1-dark);
 }
-.box article {
-    font-size: 3.8vw;
-    height: 3.1vh;
+
+/* HEADER */
+
+
+header ul {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-}
-.box time {
-    font-size: 2.8vh;
-    padding-top: .2vh;
-}
-.pill.poppedgroup{
-  /*display:none*/;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 1vh;
 }
 
-.pill.popped {
-   z-index:2;
-   height: 55vh;
-   top: 30vh !important;
+header li {
+    width: auto;
+    width: 27vw;
+    text-align: center;
 }
-.popped .icon {
-  left: -3vw;
+
+header .icon {
+    display: block;
+    height: 5vh;
+    width: 5vh;
+    background-color: var(--primary-2);
+    margin: auto;
+    margin-bottom: 1vh;
 }
-.popped .box {
+
+#history-icon{
+  -webkit-mask: var(--history-icon);
+}
+#settings-icon{
+  -webkit-mask: var(--settings-icon);
+}
+
+
+/* GRID & CONTENT */
+
+div#grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--invert);
+}
+
+#grid .pill {
+    width: 40vw;
+    padding: 3vw;
+}
+
+.pill header {
+    margin: auto;
+    width: fit-content;
+    padding: 2vw 0;
+    font-size: 5vw;
+    font-weight: 600;
+    height: 5.5vw;
+}
+
+.pill article {
+    font-size: 3.3vw;
+    text-align: center;
+    font-weight: 200;
+    min-height: 10vw;
+}
+
+.pill {
+    width: 40vw;
+    padding: 3vw;
+}
+
+.pill.can-take .big-button, dialog button.submit.can-take {
+  outline-offset: 0;
+  outline-color: var(--tertiary-yes);
+  outline-style: solid;
+}
+.pill.dont-take .big-button, dialog button.submit.dont-take {
+  outline-offset: 0;
+  outline-color: var(--tertiary-no);
+  outline-style: solid;
+}
+
+
+/* button stuff */
+
+.pill .big-button, dialog button.submit {height: 10vh;width: 10vh;background-color: var(--primary-2);border-radius: 10vh;margin: auto;border: 0.4vh solid var(--primary-1-dark);box-shadow: inset 0.2vh 0.2vh 0 white, inset -0.3vh -0.3vh 0 rgba(0,0,0,0.4);filter: drop-shadow(inset 5px 5px 0 black);transition: box-shadow 0.1s 0s;position: relative;}
+
+.pill .icon, dialog button.submit .icon {
+    position: absolute;
+    left: 2vh;
+    right: 2vh;
+    top: 2vh;
+    bottom: 2vh;
+    background: var(--plus-icon);
+    transition:transform 0.5s 0s;
+    background-repeat: no-repeat;
+    /* border-radius: 4vh; */
+    /* box-shadow: inset -0.2vh -0.2vh 0 white, inset 0.3vh 0.3vh 0 rgba(0,0,0,0.4); */
+}
+.pill:active .icon{
+    transform:rotate(180deg);
+}
+
+.pill:active .big-button, dialog button.submit:active{
+    box-shadow: inset -0.2vh -0.2vh 0 white, inset 0.3vh 0.3vh 0 rgba(0,0,0,0.4);
+}
+
+.pill[data-pill="Paracetamol"] .big-button{
+    background-color: var(--drug-paracetamol);
+}
+.pill[data-pill="Biscuit"] .big-button {
+    background-color: var(--drug-aspirin);
+}
+.pill[data-pill="Dihydrocodeine"] .big-button {
+    background-color: var(--drug-dihydrocodeine);
+}
+.pill[data-pill="Enexaparin"] .big-button {
+    background-color: var(--drug-enexaparin);
+}
+.pill[data-pill="Iron"] .big-button {
+    background-color: var(--drug-iron);
+}
+.pill[data-pill="Ibuprofen"] .big-button {
+    background-color: var(--drug-ibuprofen);
+}
+
+/* dialog */
+
+dialog {
+  width: 87vw;
+  height:fit-content;
+  background: var(--primary-1-light);
+  padding: 0;
+  border: 0.4vh solid var(--primary-1-dark);
+  border-radius: 4vh;
+  box-shadow: 0.6vh 0.6vh 0 var(--primary-1-dark);
+  color: var(--primary-1-dark);
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0, 0, 0, 1);
+  animation-name: fade-up;
+}
+
+dialog header {
+  height: 7.5vh;
+  background: var(--invert);
+  margin: 0;
+  text-align: center;
+  padding-top: 3vh;
+  font-size: 9vw;
+  font-weight: 600;
+  font-feature-settings: "ss01" 1, "onum" 1;
+  border-bottom: 0.4vh solid var(--primary-1-dark);
+}
+
+
+::backdrop {
+    position: fixed;
+    inset: 0px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+dialog.leaving button.submit .icon {
+    transition-timing-function: cubic-bezier(1, -0.01, 1, 1);
+    transition-duration: 500ms;
+    transform: rotate(270deg);
+}
+
+dialog.leaving {
+    animation-duration: 300ms;
+    animation-delay: 200ms;
+    animation-timing-function: cubic-bezier(1, 0.01, 1, 1);
+    animation-name: fade-down;
+}
+dialog.leaving-fast{
+    animation-delay: 0ms !important;
+}
+
+dialog::backdrop {
+    background: rgba(0,0,0,0.3);
+    transition: 300ms;
+}
+
+dialog.leaving::backdrop {
+    background: rgba(0,0,0,0);
+}
+
+/* internal to dialog stuff */
+
+.timespinner {
+    width: 86%;
+    margin: auto;
+    background: var(--primary-1-dark);
+    box-shadow: inset 0.5vh 0.5vh 0 rgb(0,0,0,0.5);
+    border-radius: 4vh;
+    height: 12vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.timespinner > div {
+    width: 26%;
+    text-align: center;
+    height: 100%;
+}
+
+.timespinner .content {
+    color: var(--invert);
+    font-size: 5vh;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    line-height: 12vh;
+}
+
+.timeselect .selectors {
+    z-index: 2;
+}
+
+.timeselect .date {
+    position: relative;
+    width: 91%;
+    margin: auto;
+}
+.timeselect .date .content{
+  text-align:center;
+  margin-top: 2vh;
+  margin-bottom: 1.5vh;
+  font-size: 5vw;
+}
+.timeselect .date .leftselector, .timeselect .date .rightselector{
+  width: 15vw;
+  position: absolute;
+  top: -2vh;
+  bottom: -8vw;
+  padding: 0 2vw;
+}
+
+.timeselect .date .leftselector {
+    left: 0;
+}
+
+.timeselect .date .rightselector {
+    right: 0;
+    text-align: right;
+}
+
+.ampm .content {
+    text-transform: uppercase;
+    font-size: 3vh;
+    font-weight: 600;
+}
+
+.timespinner .upselector,
+.timespinner .downselector,
+.timespinner .selector {
+    position: relative;
+    height: 70%;
+    width: 100%;
+    z-index: 2;
+}
+.timespinner label{
+  color: var(--primary-1-light);
+  font-size: 7vw;
+  transform: scaleY(0.5);
+  display: inline-block;
+  position: absolute;
   left: 0;
-  top:5vh;
-}
-.poppedgroup{
-  display:block;
-  position:absolute;
-  top:12vh;
-  width:100%;
-}
-#mask{
-  z-index:-1;
-  backdrop-filter:none;
-  transition:0.5s backdrop-filter;
-  position: fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  right:0;
-}
-#mask.maskactive{
-  z-index:1;
-  backdrop-filter: brightness(90%);
-}
-.date{
-  /* border:1px solid red; */
-}
-.timespinner{
-  display:flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  transition: 0.3s all;
-}
-.timespinner>div{
-  border:0.5vh solid black;
-  height: 11vh;
-  width: 14vw;
-  margin: 0 1.5vw;
-  border-radius: 2vh;
-  transition: 0.3s all;
-  overflow: hidden;
-}
-.timespinner>div>div{
-  position:absolute;
-  left:0;
-  right:0;
-  display:flex;
-  justify-content: center;
-  transition: inherit;
-  z-index: 2;
-}
-.downselector::before, .upselector::before { /*icons*/
-  content:"";
-  position:absolute;
-  height:1vh;
-  width:1vh;
-  border-bottom: 0.5vh solid black;
-  border-right: 0.5vh solid;
-  margin: 9px;
-}
-.downselector::before{
-  transform: rotate(45deg);
-}
-.upselector::before{
-  transform: rotate(-135deg);
-}
-.upselector, .downselector{
-  height:4vh;
-}
-.date {
-  margin:auto;
-  width: 53vw;
-  height: 4vh;
-  margin-bottom: 1vh;
-}
-.date .spinnercontent{
-  font-size: 2.5vh;
-  font-weight: 400;
-  top: 0.6vh;
-}
-.leftselector::before, .rightselector::before { /*icons*/
-  content:"";
-  position:absolute;
-  height:1vh;
-  width:1vh;
-  border-bottom: 0.5vh solid black;
-  border-right: 0.5vh solid;
-  margin: 4px;
-  top: 1vh;
-}
-.leftselector::before{
-  transform: rotate(135deg);
-  left: 0;
-}
-.rightselector::before{
-  transform: rotate(-45deg);
   right: 0;
 }
-.leftselector{
-  left:0;
-}
-.rightselector{
-  right:0;
-}
-.leftselector, .rightselector{
-  height: 100%;
-  width: 10vw;
-  position: absolute;
-  /* border: 1px solid green; */
-  z-index: 2;
-}
-.upselector, .amselector {
-  top:0;
-}
-.upselector, .pmselector {
-  align-items: flex-start;
-}
-.downselector, .pmselector {
-  bottom:0;
 
-}
-.downselector, .amselector {
-  align-items: flex-end;
-}
-.amselector, .pmselector {
-  height: 3.5vh;
-  font-size:3vh;
-}
-.am>.amselector, .pm>.pmselector{
-  height: 6.2vh;
-  font-weight: 800;
-}
-.spinnercontent{
-  height:100%;
-  /* display:flex; */
-  align-content: center;
-  /* justify-content: center; */
-  align-items: center;
-  font-size: 4vh;
-  font-weight: 800;
-  z-index: 1 !important;
-}
-.ampmselected {
-  height: 4vh;
-  align-items:center;
-  border-top: 1px solid transparent;
-  border-bottom: 1px solid transparent;
-  z-index: 0;
-}
-.pm .ampmselected {
-  top: 4.5vh;
-  border-top-color: black;
-}
-.am .ampmselected {
-  top: 1.5vh;
-  border-bottom-color: black;
-}
-.ampmselected::before, .ampmselected::after {
-  content:"";
-  position:relative;
-  height: 3vw;
-  width: 3vw;
-  background:black;
-}
-.ampmselected::before{
-  left:-5.5vw;
-  transform:rotate(135deg)
-}
-.ampmselected::after{
-  left:5.5vw;
-  transform:rotate(-45deg)
+.timespinner .ampm .selector {
+    height: 100%;
+    width: 27vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-.am .ampmselected {
-  top: 2.5vh;
-}
-button{
-  font-family: ubuntu;
-  padding: 2.5vh;
-  color: white;
-  background: black;
-  border: none;
-  border-radius: 2.5vh;
-  font-size: 2vh;
-  font-weight: 600;
-  transition: 0.3s all;
-}
-.timeselect button {
-  position: absolute;
-  right: 5vw;
-  left: 5vw;
-  bottom: -10.5vh;
-}
-/*reaction states*/
-.downselector:active{
-  transform: translateY(0.5vh);
-}
-.upselector:active{
-  transform: translateY(-0.5vh);
-}
-button:active{
-  transform: scale(.98);
-  background:#444;
-  box-shadow: 0 -0.2vh 0.6vh rgb(0,0,0,0.6);
+.timespinner .ampm label {
+    transform: scaleY(0.5) rotate(90deg);
+    left: 1vw;
+    height: 8vw;
+    left: 12vw;
 }
 
-/*history*/
-div#history{
-  background:white;
-  position:absolute;
-  /* bottom:0; */
-  top: 96vh;
-  left: 5vw;
-  right:5vw;
-  border:0.5vh solid black;
-  border-radius: 4vh;
-  font-weight:200;
-  font-size:4.2vw;
-  transition: 0.5s all;
-}
-#history header{
-  text-align: center;
-  font-size:2.5vh;
-  height:4vh;
-  font-weight:600;
-  padding-top:0.4vh
-}
-#history ol{
-  margin:auto;
-  text-align:center;
-  /* border: 1px solid red; */
-  margin-left: auto;
-  margin-right: auto;
-  display: table;
-}
-#history li{
-  height: 10vw;
-  padding: 0 2vw;
-  display:table-row;
-  margin-left: auto;
-  margin-right: auto;
-}
-#history li span, #history li time{
-  margin: 0 1vh;
-  padding: 0 0.6vw;
-  display:table-cell;
-  text-align: center;
-}
-#history span.drug{
-  font-weight:600;
-  text-align: right;
-}
-#history time{
-  font-weight: 400;
-}
-#history .buttonrow{
-  text-align:center;
-  margin:1vh 0;
-}
-#history button{
-  font-size:4.2vw;
-  font-weight:400;
-  padding-left: 4vw;
-  padding-right:4vw
+.timespinner .upselector label {
+    top: 1vh;
 }
 
-#history.popped{
-  top:20vh;
+.timespinner .downselector label {
+    bottom: 1.4vh;
+}
+
+.date .leftselector label, .date .rightselector label {
+    font-size: 7vw;
+    transform: scaleX(0.5);
+    display: inline-block;
+    top: 1.3vh;
+    color: var(--primary-1-dark);
+}
+
+.timespinner .selectors {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: space-between;
+    height: 16vh;
+    top: -2vh;
 }
 
 
+.guidance {
+    width: 80%;
+    text-align: center;
+    font-size: 4vw;
+    margin: 2vh auto;
+    font-weight: 400;
+}
 
+.guidance-part-2 {
+    margin-top: 2vh;
+}
+
+.guidance-time {
+    font-weight: 600;
+    font-size: 5.5vw;
+}
+
+dialog button.submit {
+    width: calc( 10vh + 40vw );
+    margin: auto;
+    display: block;
+    font-size: 5vw;
+    text-align: right;
+    font-family: 'Sora';
+    color: black;
+    font-weight: 300;
+    padding-right: 6vw;
+    margin-bottom: 4vh;
+}
+
+dialog button.submit .icon {
+    aspect-ratio: 1;
+    width: 5.4vh;
+    animation-name: rotate-in;
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    animation-timing-function: cubic-bezier(0, 0, 0.01, 1);
+}
+
+
+div#Paracetamol {}
