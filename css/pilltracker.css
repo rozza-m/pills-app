@@ -10,6 +10,7 @@
   --primary-1-dark: #392A58FF;
   --primary-2: #FF889EFF;
   --primary-2-light: #FFD4DCFF;
+  --primary-2-dark: #870C23;
   --default: #000000FF;
   --drug-paracetamol: #88B8FFFF;
   --drug-biscuit: #E19F79FF;
@@ -26,7 +27,14 @@
   'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path fill-rule="evenodd" d="M24 .6A3 3 0 0 1 27 .2c2.1.8 4.2 2 6 3.5a3 3 0 0 1 1 2.6 7 7 0 0 0 .8 4.2c.7 1.1 1.6 2 2.8 2.6l.5.2a3 3 0 0 1 1.7 2.3c.4 2.2.4 4.6 0 6.8a3 3 0 0 1-1.5 2.1l-.2.2a7 7 0 0 0-3.3 2.8 7 7 0 0 0-.8 4.2c0 1-.2 2-1 2.6a20 20 0 0 1-6 3.5 3 3 0 0 1-2.8-.4c-1.3-.9-2.6-1.4-4.1-1.4s-2.8.5-4 1.4a3 3 0 0 1-2.9.4 20 20 0 0 1-6-3.5 3 3 0 0 1-1-2.6 7 7 0 0 0-.8-4.2c-.7-1.1-1.6-2-2.8-2.6l-.4-.2a3 3 0 0 1-1.8-2.3c-.4-2.2-.4-4.6 0-6.8a3 3 0 0 1 1.5-2.1l.3-.2a7 7 0 0 0 3.2-2.8A7 7 0 0 0 6 6.3a3 3 0 0 1 1-2.6 20 20 0 0 1 6-3.5 3 3 0 0 1 2.8.4C17.2 1.5 18.6 2 20 2s2.8-.5 4-1.4zm2 3.6a10.9 10.9 0 0 1-12 0 16 16 0 0 0-3.9 2.2c.2 2-.2 4.2-1.4 6.1-1 2-2.7 3.3-4.5 4.3-.2 1.4-.2 3 0 4.4a10.8 10.8 0 0 1 6 10.4 16 16 0 0 0 3.8 2.2c1.8-1.1 3.8-1.8 6-1.8s4.3.7 6 1.8a16 16 0 0 0 3.9-2.2c-.2-2 .3-4.2 1.4-6.1 1-2 2.7-3.3 4.5-4.3.3-1.4.3-3 0-4.4a10.9 10.9 0 0 1-6-10.4A16 16 0 0 0 26 4.2zM20 11a8 8 0 1 1 0 16 8 8 0 0 1 0-16zm0 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" clip-rule="evenodd"/></svg>');
   --history-icon: url(
   'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M37.3 10a20 20 0 0 1-32 23.6 2 2 0 0 1 3-2.7 16 16 0 1 0-4.1-13l2.5-.7c2.1-.6 3.6 2 2.2 3.5L4.4 26a2.2 2.2 0 0 1-3.8-1 20 20 0 0 1 36.7-15zM20 8a2 2 0 0 1 2 2v9.2l5.4 5.4a2 2 0 1 1-2.8 2.8l-6-6A2 2 0 0 1 18 20V10a2 2 0 0 1 2-2z"/></svg>');
-  --plus-icon: url('data:image/svg+xml,<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 1C16.7909 1 15 2.79086 15 5V15H5C2.79086 15 1 16.7909 1 19V25C1 27.2091 2.79086 29 5 29H15V39C15 41.2091 16.7909 43 19 43H25C27.2091 43 29 41.2091 29 39V29H39C41.2091 29 43 27.2091 43 25V19C43 16.7909 41.2091 15 39 15H29V5C29 2.79086 27.2091 1 25 1H19Z" fill="white" stroke="black" stroke-width="2"/></svg>');
+  --history-icon-outsidepart: url(
+  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M 37.3 10 a 20 20 0 0 1 -32 23.6 a 2 2 0 0 1 3 -2.7 a 16 16 0 1 0 -4.1 -13 l 2.5 -0.7 c 2.1 -0.6 3.6 2 2.2 3.5 L 4.4 26 a 2.2 2.2 0 0 1 -3.8 -1 a 20 20 0 0 1 36.7 -15"/></svg>');
+  --history-icon-insidepart: url(
+  'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M 20 8 a 2 2 0 0 1 2 2 v 9.2 l 5.4 5.4 a 2 2 0 1 1 -2.8 2.8 l -6 -6 A 2 2 0 0 1 18 20 V 10 a 2 2 0 0 1 2 -2"/></svg>');
+  
+  
+  --plus-icon: url(
+  'data:image/svg+xml,<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 1C16.7909 1 15 2.79086 15 5V15H5C2.79086 15 1 16.7909 1 19V25C1 27.2091 2.79086 29 5 29H15V39C15 41.2091 16.7909 43 19 43H25C27.2091 43 29 41.2091 29 39V29H39C41.2091 29 43 27.2091 43 25V19C43 16.7909 41.2091 15 39 15H29V5C29 2.79086 27.2091 1 25 1H19Z" fill="white" stroke="black" stroke-width="2"/></svg>');
 }
 
 @keyframes rotate-in {
@@ -52,36 +60,24 @@
        }
 }
 
-#history-icon {
-    -webkit-mask: var(--history-icon);
-}
-#history-icon {
-    -webkit-mask: var(--history-icon);
-}
-
 body {
     overflow: hidden;
     font-family: 'Sora', 'Ubuntu', 'Sans-Serif';
     height: 100vh;
+    transition: background 500ms;
 }
 
 main {
-    /* position: absolute; */
-    background-color: var(--primary-1);
-    /* height: 88vh; */
-    /* bottom: 100%; */
-    /* top: 0; */
     height: 100%;
     width: 100%;
-    border-top-left-radius: 4vh;
-    border-top-right-radius: 4vh;
 }
 
 body > header {
-    height: 11vh;
+    height: 12vh;
     /* border: 1px solid red; */
     font-size: 1.4vh;
     color: var(--primary-1-dark);
+    overflow: hidden;
 }
 
 /* HEADER */
@@ -90,7 +86,7 @@ body > header {
 header ul {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
     margin: 1vh;
 }
 
@@ -98,6 +94,7 @@ header li {
     width: auto;
     width: 27vw;
     text-align: center;
+    transition: font-weight 1000ms;
 }
 
 header .icon {
@@ -107,17 +104,116 @@ header .icon {
     background-color: var(--primary-2);
     margin: auto;
     margin-bottom: 1vh;
+    transition: rotate 600ms;
 }
 
+
 #history-icon{
-  -webkit-mask: var(--history-icon);
+  -webkit-mask: var(--history-icon-outsidepart);
+}
+#history-icon-2{
+  -webkit-mask: var(--history-icon-insidepart);
 }
 #settings-icon{
   -webkit-mask: var(--settings-icon);
 }
 
 
+/* Header and navigation */
+
+body.history {
+    background: var(--primary-2-light);
+}
+body.settings {
+    background: var(--primary-1-light);
+}
+
+body.history>header li#history-menu-item, body.settings>header li#settings-menu-item {
+    font-weight: 600;
+}
+
+body.history div#history-icon, body.settings div#settings-icon {
+    rotate: -60deg;
+}
+body.history #history-menu-item div.icon,
+body.settings #settings-menu-item div.icon {
+    background-color: var(--primary-1-dark);
+}
+
+body.history>header div.icon, body.settings>header div.icon {
+    background-color: var(--primary-1);
+}
+
+body>header li#history-menu-item::after, 
+body>header li#settings-menu-item::after {
+    /*this is deselected state*/
+    content: "";
+    display: block;
+    background: var(--invert);
+    width: 3vh;
+    height: 3vh;
+    rotate: 45deg;
+    position: relative;
+    top: 4vh;
+    margin: auto;
+    transition: top 300ms;
+}
+body.history>header li#history-menu-item::after, 
+body.settings>header li#settings-menu-item::after {
+  /*this is selected state*/
+  top: 2vh;
+}
+ 
+div#history, div#settings {
+    left: 4vw;
+    right: 4vw;
+    background-color: var(--invert);
+    padding: 2vh;
+    overflow-y: scroll;
+    box-shadow: 0.8vh 0.9vh 0 rgba(0,0,0,0.2);
+}
+div#history{
+}
+div#settings{
+}
+
+#grid,
+body.history #history,
+body.settings #settings
+{
+  opacity:100%;
+  visibility:visible;
+  transition: opacity 300ms, visibility 300ms;
+  transition-delay: 0ms, 0ms;
+}
+
+body.settings div#grid, 
+body.history div#grid,
+div#history,
+div#settings
+{
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms, visibility 0ms;
+    transition-delay: 0ms, 300ms;
+}
+
+header .extra-icon {
+  position: absolute;left: 50%;margin-left: -2.5vh;top: 0;
+}
+
 /* GRID & CONTENT */
+
+main > div {
+    /* height: 100%; */
+    border-top-left-radius: 4vh;
+    border-top-right-radius: 4vh;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 12vh;
+}
 
 div#grid {
     display: flex;
@@ -125,8 +221,8 @@ div#grid {
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-    height: 100%;
     color: var(--invert);
+    background-color: var(--primary-1);
 }
 
 #grid .pill {
@@ -134,7 +230,8 @@ div#grid {
     padding: 3vw;
 }
 
-.pill header {
+.pill
+    header {
     margin: auto;
     width: moz-fit-content;
     width: fit-content;
@@ -144,7 +241,8 @@ div#grid {
     height: 5.5vw;
 }
 
-.pill article {
+.pill
+    article {
     font-size: 3.3vw;
     text-align: center;
     font-weight: 200;
@@ -156,23 +254,36 @@ div#grid {
     padding: 3vw;
 }
 
-.pill.can-take .big-button, dialog button.submit.can-take {
+.pill.can-take .big-button,
+    dialog button.submit.can-take {
   outline-offset: 0;
-  outline-color: var(--tertiary-yes);
-  outline-style: solid;
+    outline-color: var(--tertiary-yes);
+    outline-style: solid;
 }
-.pill.dont-take .big-button, dialog button.submit.dont-take {
+.pill.dont-take .big-button,
+    dialog button.submit.dont-take {
   outline-offset: 0;
-  outline-color: var(--tertiary-no);
-  outline-style: solid;
+    outline-color: var(--tertiary-no);
+    outline-style: solid;
 }
 
 
 /* button stuff */
 
-.pill .big-button, dialog button.submit {height: 10vh;width: 10vh;background-color: var(--primary-2);border-radius: 10vh;margin: auto;border: 0.4vh solid var(--primary-1-dark);box-shadow: inset 0.2vh 0.2vh 0 white, inset -0.3vh -0.3vh 0 rgba(0,0,0,0.4);filter: drop-shadow(inset 5px 5px 0 black);transition: box-shadow 0.1s 0s;position: relative;}
+.pill .big-button,
+    dialog button.submit {height: 10vh;
+    width: 10vh;
+    background-color: var(--primary-2);
+    border-radius: 10vh;
+    margin: auto;
+    border: 0.4vh solid var(--primary-1-dark);
+    box-shadow: inset 0.2vh 0.2vh 0 white, inset -0.3vh -0.3vh 0 rgba(0,0,0,0.4);
+    filter: drop-shadow(inset 5px 5px 0 black);
+    transition: box-shadow 0.1s 0s;
+    position: relative;}
 
-.pill .icon, dialog button.submit .icon {
+.pill .icon,
+    dialog button.submit .icon {
     position: absolute;
     left: 2vh;
     right: 2vh;
@@ -184,90 +295,99 @@ div#grid {
     /* border-radius: 4vh; */
     /* box-shadow: inset -0.2vh -0.2vh 0 white, inset 0.3vh 0.3vh 0 rgba(0,0,0,0.4); */
 }
-.pill:active .icon{
+.pill:
+    active .icon{
     transform:rotate(180deg);
 }
 
-.pill:active .big-button, dialog button.submit:active{
+.pill:
+    active .big-button, dialog button.submit:active{
     box-shadow: inset -0.2vh -0.2vh 0 white, inset 0.3vh 0.3vh 0 rgba(0,0,0,0.4);
 }
 
-.pill[data-pill="Paracetamol"] .big-button{
+.pill[
+    data-pill="Paracetamol"] .big-button,
+dialog[data-pill="Paracetamol"] button.submit{
     background-color: var(--drug-paracetamol);
 }
-.pill[data-pill="Biscuit"] .big-button {
+.pill[
+    data-pill="Biscuit"] .big-button,
+dialog[data-pill="Biscuit"] button.submit{
     background-color: var(--drug-aspirin);
 }
-.pill[data-pill="Dihydrocodeine"] .big-button {
+.pill[
+    data-pill="Dihydrocodeine"] .big-button,
+dialog[data-pill="Dihydrocodeine"] button.submit{
     background-color: var(--drug-dihydrocodeine);
 }
-.pill[data-pill="Enexaparin"] .big-button {
+.pill[
+    data-pill="Enexaparin"] .big-button,
+dialog[data-pill="Enexaparin"] button.submit{
     background-color: var(--drug-enexaparin);
 }
-.pill[data-pill="Iron"] .big-button {
+.pill[
+    data-pill="Iron"] .big-button,
+dialog[data-pill="Iron"] button.submit{
     background-color: var(--drug-iron);
 }
-.pill[data-pill="Ibuprofen"] .big-button {
+.pill[
+    data-pill="Ibuprofen"] .big-button,
+dialog[data-pill="Ibuprofen"] button.submit{
     background-color: var(--drug-ibuprofen);
 }
 
 /* dialog */
-
-dialog {
+    dialog {
   width: 87vw;
-  height:fit-content;
-  background: var(--primary-1-light);
-  padding: 0;
-  border: 0.4vh solid var(--primary-1-dark);
-  border-radius: 4vh;
-  box-shadow: 0.6vh 0.6vh 0 var(--primary-1-dark);
-  color: var(--primary-1-dark);
-  animation-duration: 300ms;
-  animation-timing-function: cubic-bezier(0, 0, 0, 1);
-  animation-name: fade-up;
+    height:fit-content;
+    background: var(--primary-1-light);
+    padding: 0;
+    border: 0.4vh solid var(--primary-1-dark);
+    border-radius: 4vh;
+    box-shadow: 0.6vh 0.6vh 0 var(--primary-1-dark);
+    color: var(--primary-1-dark);
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0, 0, 0, 1);
+    animation-name: fade-up;
 }
-
-dialog header {
+    dialog header {
   height: 7.5vh;
-  background: var(--invert);
-  margin: 0;
-  text-align: center;
-  padding-top: 3vh;
-  font-size: 9vw;
-  font-weight: 600;
-  font-feature-settings: "ss01" 1, "onum" 1;
-  border-bottom: 0.4vh solid var(--primary-1-dark);
+    background: var(--invert);
+    margin: 0;
+    text-align: center;
+    padding-top: 3vh;
+    font-size: 9vw;
+    font-weight: 600;
+    font-feature-settings: "ss01" 1, "onum" 1;
+    border-bottom: 0.4vh solid var(--primary-1-dark);
 }
 
 
-::backdrop {
+::
+    backdrop {
     position: fixed;
     inset: 0px;
     background: rgba(0, 0, 0, 0.1);
 }
-
-dialog.leaving button.submit .icon {
+    dialog.leaving button.submit .icon {
     transition-timing-function: cubic-bezier(1, -0.01, 1, 1);
     transition-duration: 500ms;
     transform: rotate(270deg);
 }
-
-dialog.leaving {
+    dialog.leaving {
     animation-duration: 300ms;
     animation-delay: 200ms;
     animation-timing-function: cubic-bezier(1, 0.01, 1, 1);
     animation-name: fade-down;
 }
-dialog.leaving-fast{
+    dialog.leaving-fast{
     animation-delay: 0ms !important;
 }
-
-dialog::backdrop {
+    dialog::backdrop {
     background: rgba(0,0,0,0.3);
     transition: 300ms;
 }
-
-dialog.leaving::backdrop {
+    dialog.leaving::backdrop {
     background: rgba(0,0,0,0);
 }
 
@@ -285,7 +405,8 @@ dialog.leaving::backdrop {
     justify-content: center;
 }
 
-.timespinner > div {
+.timespinner >
+    div {
     width: 26%;
     text-align: center;
     height: 100%;
@@ -312,17 +433,17 @@ dialog.leaving::backdrop {
     margin: auto;
 }
 .timeselect .date .content{
-  text-align:center;
-  margin-top: 2vh;
-  margin-bottom: 1.5vh;
-  font-size: 5vw;
+    text-align:center;
+    margin-top: 2vh;
+    margin-bottom: 1.5vh;
+    font-size: 5vw;
 }
 .timeselect .date .leftselector, .timeselect .date .rightselector{
-  width: 15vw;
-  position: absolute;
-  top: -2vh;
-  bottom: -8vw;
-  padding: 0 2vw;
+    width: 15vw;
+    position: absolute;
+    top: -2vh;
+    bottom: -8vw;
+    padding: 0 2vw;
 }
 
 .timeselect .date .leftselector {
@@ -348,14 +469,15 @@ dialog.leaving::backdrop {
     width: 100%;
     z-index: 2;
 }
-.timespinner label{
+.timespinner
+    label{
   color: var(--primary-1-light);
-  font-size: 7vw;
-  transform: scaleY(0.5);
-  display: inline-block;
-  position: absolute;
-  left: 0;
-  right: 0;
+    font-size: 7vw;
+    transform: scaleY(0.5);
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    right: 0;
 }
 
 .timespinner .ampm .selector {
@@ -366,22 +488,26 @@ dialog.leaving::backdrop {
     justify-content: flex-end;
 }
 
-.timespinner .ampm label {
+.timespinner .ampm
+    label {
     transform: scaleY(0.5) rotate(90deg);
     left: 1vw;
     height: 8vw;
     left: 12vw;
 }
 
-.timespinner .upselector label {
+.timespinner .upselector
+    label {
     top: 1vh;
 }
 
-.timespinner .downselector label {
+.timespinner .downselector
+    label {
     bottom: 1.4vh;
 }
 
-.date .leftselector label, .date .rightselector label {
+.date .leftselector
+    label, .date .rightselector label {
     font-size: 7vw;
     transform: scaleX(0.5);
     display: inline-block;
@@ -415,7 +541,6 @@ dialog.leaving::backdrop {
     font-weight: 600;
     font-size: 5.5vw;
 }
-
 dialog button.submit {
     width: calc( 10vh + 40vw );
     margin: auto;
@@ -436,4 +561,58 @@ dialog button.submit .icon {
     animation-duration: 1000ms;
     animation-iteration-count: 1;
     animation-timing-function: cubic-bezier(0, 0, 0.01, 1);
+};
+
+/* history */
+#history button, #settings button{
+  margin:auto;
+}
+
+
+#history button {
+    margin: auto;
+    font-family: 'Sora';
+    text-align: center;
+    display: inline-block;
+    font-size: 5vw;
+    width: 100%;
+    background: var(--invert);
+    border: 0.4vh solid var(--default);
+    height: 6vh;
+    border-radius: 3vh;
+    box-shadow: inset -0.4vh -0.5vh 0 rgba(0,0,0,0.4);
+    transition: box-shadow 200ms;
+}
+
+.date-row {
+    font-size: 5.5vw;
+    font-weight: 600;
+    padding: 2vh 5vw 1vh;
+    color: var(--default);
+}
+
+.pill-row {
+    padding: 0.3vh 5vw 0.3vh 10vw;
+    font-size: 4vw;
+    font-weight: 300;
+}
+
+span.history-time {
+    width: 40%;
+    text-align: right;
+    display: inline-block;
+    font-weight: 400;
+}
+
+span.history-pill {
+    width: 60%;
+    display: inline-block;
+}
+
+div#history-list {
+    margin-bottom: 5vh;
+}
+
+#history button:active {
+    box-shadow: inset 0.2vh 0.2vh 0 rgba(0,0,0,0.4);
 }

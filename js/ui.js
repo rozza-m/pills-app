@@ -16,7 +16,6 @@ const pillTypes = [{
 // Add event listeners
 var pills = document.querySelectorAll('.pill');
 var mask = document.querySelector('#mask');
-var historydiv = document.querySelector('#history');
 var ampmselector = document.querySelectorAll('.ampm .selector');
 var submitbutton = document.querySelectorAll('button.submit');
 var upselector = document.querySelectorAll('.upselector');
@@ -24,6 +23,7 @@ var downselector = document.querySelectorAll('.downselector');
 var leftselector = document.querySelectorAll('.leftselector');
 var rightselector = document.querySelectorAll('.rightselector');
 var dialog = document.querySelectorAll('dialog');
+var header = document.querySelector('body>header');
 
 // Add onLoad and timers
 window.onload = function() {
@@ -44,6 +44,35 @@ window.onload = function() {
 ;
 
 /* EVENT HANDLERS */
+
+//click on header -> check for click location; if historymenuitem was clicked, activate history; same for settings, otherwise clear both
+header.addEventListener('click', function(event) { 
+
+    if (event.target.closest('#history-menu-item')) {
+        document.querySelector('body').classList.toggle('history');
+        fillHistory();
+        document.querySelector('body').classList.toggle('settings', false);
+    } else if (event.target.closest('#settings-menu-item')) {
+        document.querySelector('body').classList.toggle('history', false);
+        document.querySelector('body').classList.toggle('settings');
+    } else {
+        document.querySelector('body').classList.toggle('history', false);
+        document.querySelector('body').classList.toggle('settings', false);
+    }
+    
+})
+
+// //click on history menu item -> adds .history class to body (visibility is taken care of through css)
+// historymenuitem.addEventListener('click', function() {
+//     document.querySelector('body').classList.toggle('history');
+//     document.querySelector('body').classList.toggle('settings', false);
+// })
+
+// //click on settings menu item -> adds .settings class to body
+// settingsmenuitem.addEventListener('click', function() {
+//     document.querySelector('body').classList.toggle('history', false);
+//     document.querySelector('body').classList.toggle('settings');
+// })
 
 //click on each pill -> pops and fills time
 for (var i = 0; i < pills.length; i++) {
@@ -204,8 +233,11 @@ function destroyDialog(immediately = false) {
     //close dialog in 500ms
     setTimeout(()=>{
         dialog.close();
-        dialog.classList.toggle('leaving', false);
-        dialog.classList.toggle('leaving-fast', false);
+
+        setTimeout(() => {
+            dialog.classList.toggle('leaving', false);
+            dialog.classList.toggle('leaving-fast', false);
+        }, 25);
     }
     , (immediately? 300: 500));
 }
@@ -362,6 +394,75 @@ function updatePillStatusOnGrid() {
     }
     );
 }
+
+//crawl the history of pills and add them to the history list
+function fillHistory() {
+    var historyListElement = document.querySelector('#history-list');
+    historyListElement.innerHTML = '';
+
+    getHistory()
+        .then((result) => {
+            
+            console.log(result);
+            createHistoryDivs(result, historyListElement);
+
+        })
+        .catch((error) => {
+            // Handle any errors that occurred during the execution
+            console.error(error);
+        });
+}
+
+function createHistoryDivs(historyData) {
+    let previousDay = null;
+    const historyContainer = document.getElementById('history-list');
+  
+    historyData.reverse().forEach((item) => {
+      const { pill, timestamp } = item;
+      const currentDay = new Date(timestamp).toLocaleDateString();
+      
+      let dayText;
+      const today = new Date().toLocaleDateString();
+      const yesterday = new Date(Date.now() - 86400000).toLocaleDateString();
+      const tomorrow = new Date(Date.now() + 86400000).toLocaleDateString();
+      
+      if (currentDay === today) {
+        dayText = 'Today';
+      } else if (currentDay === yesterday) {
+        dayText = 'Yesterday';
+      } else if (currentDay === tomorrow) {
+        dayText = 'Tomorrow';
+      } else {
+        dayText = new Date(timestamp).toLocaleDateString([], {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'short'
+        });
+      }
+  
+      if (currentDay !== previousDay) {
+        // Create a header row with the new date
+        const headerDiv = document.createElement('div');
+        //headerDiv.innerHTML = dayText;
+        headerDiv.innerHTML = `<div class="date-row">${dayText}</div>`
+        historyContainer.appendChild(headerDiv);
+        previousDay = currentDay;
+      }
+  
+      // Create a div for the pill and timestamp
+      const pillDiv = document.createElement('div');
+      //pillDiv.textContent = `Pill: ${pill} | Timestamp: ${timestamp}`;
+      const timeString = new Date(timestamp).toLocaleTimeString([], {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+        });
+      pillDiv.innerHTML = `<div class="pill-row"><span class="history-pill">${pill}</span><span class="history-time">${timeString}</span></div>`;
+      historyContainer.appendChild(pillDiv);
+    });
+  }
+
+
 
 function formatDuration(duration) {
     const minutes = Math.floor(duration / 60000);

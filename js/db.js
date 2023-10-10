@@ -267,10 +267,30 @@ function pillsInLastDay(pill, callbackPillsInLastDay) {
   };
 }
 
+// Pull entire history as an array of objects.
+function getHistory() {
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('history', 'readonly');
+    const store = tx.objectStore('history');
+
+    const request = store.getAll();
+
+    request.onsuccess = function(event) {
+      const result = event.target.result;
+      resolve(result);
+    };
+
+    request.onerror = function(event) {
+      const error = event.target.error;
+      reject(error);
+    };
+  });
+}
+
 // Wait for the database connection to be established
 function waitForDBConnection() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('your_database_name');
+    const request = indexedDB.open('pilltracker');
 
     request.onsuccess = function(event) {
       const db = event.target.result;
