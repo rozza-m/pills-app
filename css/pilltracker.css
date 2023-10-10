@@ -569,7 +569,7 @@ dialog button.submit .icon {
 }
 
 
-#history button {
+#history button, #settings button {
     margin: auto;
     font-family: 'Sora';
     text-align: center;
