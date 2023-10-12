@@ -34,7 +34,7 @@ window.onload = function() {
         updatePillStatusOnGrid();
 
         // Run the function every 20 seconds
-        setInterval(updatePillStatusOnGrid, 20000);
+        //setInterval(updatePillStatusOnGrid, 20000);
     }
     ).catch((error)=>{
         console.error('Error occurred while establishing database connection:', error);
@@ -49,15 +49,32 @@ window.onload = function() {
 header.addEventListener('click', function(event) { 
 
     if (event.target.closest('#history-menu-item')) {
-        document.querySelector('body').classList.toggle('history');
-        fillHistory();
+        if(document.querySelector('body').classList.toggle('history')) {
+            fillHistory();
+            history.replaceState({}, '', '/'); //kill history so we're only one level from root
+            history.pushState({state: 'history'}, '', '#history');
+            console.log('history');
+        } else {
+            history.replaceState({}, '', '/');
+            console.log('root');
+        }
         document.querySelector('body').classList.toggle('settings', false);
+        //history.pushState({state: 'history'}, '', '#history');
     } else if (event.target.closest('#settings-menu-item')) {
+        if(document.querySelector('body').classList.toggle('settings')){
+            history.replaceState({}, '', '/'); //kill history so we're only one level from root
+            history.pushState({state: 'settings'}, '', '#settings');
+            console.log('settings');
+        } else {
+            history.replaceState({}, '', '/');
+            console.log('root');
+        }
         document.querySelector('body').classList.toggle('history', false);
-        document.querySelector('body').classList.toggle('settings');
+        
     } else {
         document.querySelector('body').classList.toggle('history', false);
         document.querySelector('body').classList.toggle('settings', false);
+        history.replaceState({}, '', '/'); //clear history, next press will exit
     }
     
 })
@@ -80,6 +97,7 @@ for (var i = 0; i < pills.length; i++) {
         /*for (var j = 0; j < pills.length; j++) {
           pills[j].classList.remove('popped');
         }*/
+        history.pushState({}, 'dialog', `#record-dose-${this.dataset.pill}`);
 
         console.log('Showing recorddose dialog for' + this.dataset)
 
@@ -221,6 +239,45 @@ for (var i = 0; i < dialog.length; i++) {
     });
 }
 
+//handle back button being pressed
+
+let previousState;
+window.onpopstate = function(event) {
+    console.log(
+        `location: ${document.location}, state: ${JSON.stringify(event.state)}`,
+    );
+  if (event.state === null || event.state === undefined || Object.keys(event.state).length === 0) {
+    // The user navigated to /
+    console.log('Navigated to /');
+    if (document.querySelector(':scope dialog[open]')) {
+        destroyDialog(true);
+        console.log('Destroyed dialog');
+    }
+    document.querySelector('body').classList.toggle('history', false);
+    document.querySelector('body').classList.toggle('settings', false);
+    history.replaceState({}, '', '/'); //kill history
+  //else if event.state is 'dialog'
+  } else if (event.state.state === 'dialog') {
+    // The user navigated to /a dialog
+    console.log('Attempted to navigate to a dialog, cancelling');
+    history.go(-1);
+      
+  } else if (event.state.state === 'history') {
+    console.log('Navigated to history');
+    document.querySelector('body').classList.toggle('history', true);
+    document.querySelector('body').classList.toggle('settings', false);
+  } else if (event.state.state === 'settings') {
+    console.log('Navigated to settings');
+    document.querySelector('body').classList.toggle('history', false);
+    document.querySelector('body').classList.toggle('settings', true);
+  } else {
+    console.log('Something else happened:');
+    console.log(event.state);
+  }
+
+  previousState = event.state;
+}
+
 /* BEHAVIOURS */
 
 //destroy popup
@@ -240,6 +297,8 @@ function destroyDialog(immediately = false) {
         }, 25);
     }
     , (immediately? 300: 500));
+
+    history.replaceState(null, null, document.location.pathname); //replace history. this should remove the dialog from the back stack....?
 }
 
 //increment or decrement date

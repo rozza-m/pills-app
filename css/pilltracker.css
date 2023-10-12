@@ -185,6 +185,13 @@ body.settings #settings
   visibility:visible;
   transition: opacity 300ms, visibility 300ms;
   transition-delay: 0ms, 0ms;
+  scrollbar-width: 0;
+  -webkit-scrollbar-width: 0px;
+}
+#grid::-webkit-scrollbar,
+body.history #history::-webkit-scrollbar,
+body.settings #settings::-webkit-scrollbar{
+  display:none;
 }
 
 body.settings div#grid, 
@@ -226,8 +233,8 @@ div#grid {
 }
 
 #grid .pill {
-    width: 40vw;
-    padding: 3vw;
+    width: 44vw;
+    padding: 1vh 2vw;
 }
 
 .pill
@@ -235,18 +242,18 @@ div#grid {
     margin: auto;
     width: moz-fit-content;
     width: fit-content;
-    padding: 2vw 0;
+    padding: 4vw 0;
     font-size: 5vw;
     font-weight: 600;
     height: 5.5vw;
 }
 
-.pill
-    article {
+.pill article {
     font-size: 3.3vw;
     text-align: center;
     font-weight: 200;
     min-height: 10vw;
+    padding: 0 5vw;
 }
 
 .pill {
@@ -254,33 +261,57 @@ div#grid {
     padding: 3vw;
 }
 
-.pill.can-take .big-button,
+.pill .pill-text {
+  background: var(--primary-1-dark);
+  border: 0.5vh solid var(--primary-1-dark);
+  border-radius: 3vh;
+  top: -7vh;
+  padding-top: 7vh;
+  padding-bottom: 2vh;
+  box-shadow: 0.5vh 0.5vh rgba(0,0,0,0.1);
+}
+
+/*.pill.can-take .big-button,
     dialog button.submit.can-take {
   outline-offset: 0;
     outline-color: var(--tertiary-yes);
     outline-style: solid;
+      
 }
+
 .pill.dont-take .big-button,
     dialog button.submit.dont-take {
   outline-offset: 0;
     outline-color: var(--tertiary-no);
     outline-style: solid;
 }
+*/
+.pill.can-take .big-button,
+    dialog button.submit.can-take {
+      background-color: var(--drug-paracetamol)
+    }
+
+.pill.dont-take .big-button .icon,
+    dialog button.submit.dont-take .icon {
+      rotate: 45deg;
+    }
 
 
 /* button stuff */
 
 .pill .big-button,
-    dialog button.submit {height: 10vh;
+    dialog button.submit {
+    height: 10vh;
     width: 10vh;
     background-color: var(--primary-2);
     border-radius: 10vh;
     margin: auto;
     border: 0.4vh solid var(--primary-1-dark);
-    box-shadow: inset 0.2vh 0.2vh 0 white, inset -0.3vh -0.3vh 0 rgba(0,0,0,0.4);
+    box-shadow: inset 0.2vh 0.2vh 0 white, inset -0.3vh -0.3vh 0 rgba(0,0,0,0.4), 0.3vh 0.3vh 0 rgba(0,0,0,0.4);
     filter: drop-shadow(inset 5px 5px 0 black);
     transition: box-shadow 0.1s 0s;
-    position: relative;}
+    z-index: 2;
+    }
 
 .pill .icon,
     dialog button.submit .icon {
@@ -304,7 +335,7 @@ div#grid {
     active .big-button, dialog button.submit:active{
     box-shadow: inset -0.2vh -0.2vh 0 white, inset 0.3vh 0.3vh 0 rgba(0,0,0,0.4);
 }
-
+/*
 .pill[
     data-pill="Paracetamol"] .big-button,
 dialog[data-pill="Paracetamol"] button.submit{
@@ -335,6 +366,7 @@ dialog[data-pill="Iron"] button.submit{
 dialog[data-pill="Ibuprofen"] button.submit{
     background-color: var(--drug-ibuprofen);
 }
+*/
 
 /* dialog */
     dialog {
@@ -552,6 +584,7 @@ dialog button.submit {
     font-weight: 300;
     padding-right: 6vw;
     margin-bottom: 4vh;
+    position: relative;
 }
 
 dialog button.submit .icon {
