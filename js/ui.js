@@ -34,7 +34,7 @@ window.onload = function() {
         updatePillStatusOnGrid();
 
         // Run the function every 20 seconds
-        //setInterval(updatePillStatusOnGrid, 20000);
+        setInterval(updatePillStatusOnGrid, 20000);
     }
     ).catch((error)=>{
         console.error('Error occurred while establishing database connection:', error);
