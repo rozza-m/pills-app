@@ -341,22 +341,24 @@ function incrementDate(increment) {
 //increment or decrement hour
 function incrementHour(increment) {
     var contentElement = document.querySelector('dialog.recorddose .hour .content');
-    var hourValue = parseInt(contentElement.innerHTML);
-    hourValue += increment;
-    if (hourValue > 12) {
-        hourValue = 1;
-        if (flipAmPm() == 1) {
-            //ampm flipped from pm to am
+    const hourValue = parseInt(contentElement.innerHTML);
+    var newHourValue = hourValue + increment;
+    if (newHourValue > 12) {
+        newHourValue = 1;
+    } else if (newHourValue < 1) {
+        newHourValue = 12;
+    }
+
+    if (newHourValue == 12 && hourValue == 11 ) { //we've gone forwards, need to flip am/pm
+        if (flipAmPm() == "PmToAm") {
             incrementDate(1);
         }
-    } else if (hourValue < 1) {
-        hourValue = 12;
-        if (flipAmPm() == -1) {
-            //ampm flipped from am to pm
+    } else if (newHourValue == 11 && hourValue == 12) { //we've gone backwards, need to flip am/pm
+        if (flipAmPm() == "AmToPm") {
             incrementDate(-1);
         }
     }
-    contentElement.innerHTML = hourValue.toString();
+    contentElement.innerHTML = newHourValue.toString();
 }
 
 //increment or decrement minute
@@ -379,11 +381,11 @@ function flipAmPm() {
     var contentElement = document.querySelector('dialog.recorddose .ampm .content');
     if (contentElement.textContent === 'AM') {
         contentElement.textContent = 'PM';
-        return -1;
+        return "AmToPm";
         //signals that a day might have changed if used from another function
     } else {
         contentElement.textContent = 'AM';
-        return 1;
+        return "PmToAm";
         //signals that a day might have changed if used from another function
     }
 }

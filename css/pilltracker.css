@@ -102,7 +102,7 @@ header .icon {
     display: block;
     height: 5vh;
     width: 5vh;
-    background-color: var(--primary-2);
+    background-color: var(--primary-1);
     margin: auto;
     margin-bottom: 1vh;
     transition: rotate 800ms, background 300ms;
