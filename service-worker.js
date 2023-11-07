@@ -24,11 +24,7 @@
           'css/pilltracker.css',
           'css/icons.css',
           'resources/reset.css',
-          'resources/Ubuntu-Bold.ttf',
-          'resources/Ubuntu-Medium.ttf',
-          'resources/Ubuntu-Regular.ttf',
-          'resources/Ubuntu-Light.ttf',
-          'resources/UbuntuCondensed-Regular.ttf'
+          'resources/Sora.ttf'
         ];
   
         const cachePromises = urlsToCache.map((url) => {
@@ -60,9 +56,11 @@
         return fetch(event.request).then((response) => {
           // Update the cache with the latest version of the file
           cache.put(event.request, response.clone());
+          console.log('Served from network: ', event.request.url);
           return response;
         }).catch(() => {
           // Serve the file from the cache if the network request fails
+          console.log('Served from cache:   ', event.request.url);
           return cache.match(event.request);
         });
       })

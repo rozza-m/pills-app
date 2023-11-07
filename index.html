@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="./css/pilltracker.css" type="text/css">
         <link rel="stylesheet" href="./css/icons.css" type="text/css">
         <link rel="manifest" href="manifest.json" />
+        <link rel="apple-touch-icon" href="icons/ios/167.png">
         <script type="text/javascript">
 
             // Initialize the service worker
@@ -112,7 +113,6 @@
                         <article>Don't take any more until</article>
                     </div>
                 </div>
-                <div id="mask" class=""></div><!-- this can be removed because dialog's ::backdrop can be used instead with some slight changes to the js. ask Bing about it, it involves .getBoundingClientRect -->
 
             </div>
             <div id="history">
@@ -121,7 +121,46 @@
                 </div>
             </div>
             <div id="settings">
-                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit.</span>
+                <p>
+                    <h1>Medications</h1>
+                    <ul>
+                        <li -data-pill="Paracetamol">
+                            <span class="pill-tooltip-trigger"><span class="pill-name">Drug 1</span>
+                                <div class="pill-dosing-info">
+                                    <p><span class="hours-between-doses">x</span> hours between doses</p>
+                                    <p><span class="times-per-day">x</span> times per day</p>
+                                </div>
+                            </span>
+                            <input type="checkbox"></input>
+                        </li>
+                        <li -data-pill="Paracetamol">
+                            <span class="pill-tooltip-trigger"><span class="pill-name">Drug 1</span>
+                                <div class="pill-dosing-info">
+                                    <p><span class="hours-between-doses">x</span> hours between doses</p>
+                                    <p><span class="times-per-day">x</span> times per day</p>
+                                </div>
+                            </span>
+                            <input type="checkbox"></input>
+                        </li>
+                        <li -data-pill="Paracetamol">
+                            <span class="pill-tooltip-trigger"><span class="pill-name">Drug 1</span>
+                                <div class="pill-dosing-info">
+                                    <p><span class="hours-between-doses">x</span> hours between doses</p>
+                                    <p><span class="times-per-day">x</span> times per day</p>
+                                </div>
+                            </span>
+                            <input type="checkbox"></input>
+                        </li>
+                        <li -data-pill="Paracetamol">
+                            <span class="pill-tooltip-trigger"><span class="pill-name">Drug 1</span>
+                                <div class="pill-dosing-info">
+                                    <p><span class="hours-between-doses">x</span> hours between doses</p>
+                                    <p><span class="times-per-day">x</span> times per day</p>
+                                </div>
+                            </span>
+                            <input type="checkbox"></input>
+                        </li>
+                    </ul>
                 <button id="clear-all">Clear all data</button>
             </div>
         </main>
