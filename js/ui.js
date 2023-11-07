@@ -25,6 +25,7 @@ var rightselector = document.querySelectorAll('.rightselector');
 var dialog = document.querySelectorAll('dialog');
 var header = document.querySelector('body>header');
 
+
 // Add onLoad and timers
 window.onload = function() {
     waitForDBConnection().then((db)=>{
@@ -239,6 +240,11 @@ for (var i = 0; i < dialog.length; i++) {
     });
 }
 
+
+
+
+/* BEHAVIOURS */
+
 //handle back button being pressed
 
 let previousState;
@@ -278,7 +284,7 @@ window.onpopstate = function(event) {
   previousState = event.state;
 }
 
-/* BEHAVIOURS */
+
 
 //destroy popup
 function destroyDialog(immediately = false) {
