@@ -59,6 +59,30 @@ request.onerror = function(event) {
   console.error('Failed to open the database:', event.target.error);
 };
 
+//Pill types are hardcoded for now
+const pillTypes = {
+  Paracetamol: {
+    name: 'Paracetamol',
+    hoursBetweenDoses: 4,
+    maxDosesPerDay: 4,
+  },
+  Ibuprofen: {
+    name: 'Ibuprofen',
+    hoursBetweenDoses: 4,
+    maxDosesPerDay: 3,
+  },
+  Oramorph: {
+    name: 'Oramorph',
+    hoursBetweenDoses: 4,
+    maxDosesPerDay: 3,
+  },
+  Dihydrocodeine: {
+    name: 'Dihydrocodeine',
+    hoursBetweenDoses: 12,
+    maxDosesPerDay: 1,
+  },
+};
+
 // Function to add a pill to history
 function addPillToHistory(pill, timestamp) {
 
@@ -84,35 +108,43 @@ function canTakePill(pill) {
   // Check incoming data for errors
   if (!pill) { // Empty
     console.log('Pill is empty');
-    return;
+    reject('Pill is empty');
   }
+
+  if (!pillTypes[pill]) { // Unknown pill type
+    console.log('Unknown pill type');
+    reject('Unknown pill type');
+  }
+
   //TODO - undefined behaviour if pill exists but no history is found
+  //TODO - undefined behaviour after evaluation of pill taken in the future
   //TODO - double check logic if both checks are positive
   
   const currentTimestamp = new Date();
-  const fourHoursInMilliseconds = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
 
   const pillHistorySummary = {}; // This is the return object
   const pillHistorySummaryLastPill = {}; // for the first check
   const pillHistorySummary24h = {}; // for the second check
-
+  
   // Get last pill that matches pill type
   const getLastPillPromise = new Promise((resolve, reject) => {
     getLastPill(pill, function(lastPill) {
       console.log('  getLastPill callback in canTakePill ' + pill);
       if (lastPill) {
         //console.log('Last pill was ' + lastPill.pill + ' at ' + lastPill.timestamp);
-        // Check if last pill is within 4 hours
+        // Check if last pill is within x hours
         const lastPillTimestamp = new Date(lastPill.timestamp);
-
-        if (currentTimestamp - lastPillTimestamp < fourHoursInMilliseconds) {
-          //console.log('Last pill is within 4 hours');
+        const hoursBetweenDoses = pillTypes[pill].hoursBetweenDoses;
+  
+        // if (currentTimestamp.getHours() - lastPillTimestamp.getHours() < hoursBetweenDoses) {
+        if (currentTimestamp - lastPillTimestamp < new Date(0).setHours(hoursBetweenDoses)) {  
+          //console.log('Last pill is within x hours');
           pillHistorySummaryLastPill.canTakePill = false;
-          pillHistorySummaryLastPill.canTakeMoreAt = lastPillTimestamp;
-          pillHistorySummaryLastPill.canTakeMoreAt.setHours(pillHistorySummaryLastPill.canTakeMoreAt.getHours() + 4);
+          pillHistorySummaryLastPill.canTakeMoreAt = new Date(lastPillTimestamp);
+          pillHistorySummaryLastPill.canTakeMoreAt.setHours(pillHistorySummaryLastPill.canTakeMoreAt.getHours() + hoursBetweenDoses);
           pillHistorySummaryLastPill.reason = 'hourLimitReached';
         } else {
-          //console.log('Last pill is not within 4 hours');
+          //console.log('Last pill is not within x hours');
           pillHistorySummaryLastPill.canTakePill = true;
           pillHistorySummaryLastPill.lastTakenAt = lastPillTimestamp;
         }
@@ -131,15 +163,17 @@ function canTakePill(pill) {
       console.log('  pillsInLastDay callback in canTakePill ' + pill);
       if (pillsInLastDay) {
         // console.log(pillsInLastDay.value + ' pills in last 24 hours');
-        if (pillsInLastDay.value >= 4) {
-          // console.log('More than or equal to 4 pills in last 24 hours');
+        const maxDosesPerDay = pillTypes[pill].maxDosesPerDay;
+
+        if (pillsInLastDay.value >= maxDosesPerDay) {
+          // console.log('More than or equal to x pills in last 24 hours');
           pillHistorySummary24h.canTakePill = false;
 
           pillHistorySummary24h.canTakeMoreAt = new Date(pillsInLastDay.timestamp);
           pillHistorySummary24h.canTakeMoreAt.setDate(pillHistorySummary24h.canTakeMoreAt.getDate() + 1);
 
         } else {
-          // console.log('Less than 4 pills in last 24 hours');
+          // console.log('Less than x pills in last 24 hours');
           pillHistorySummary24h.canTakePill = true;
         }
       } else {
@@ -186,7 +220,7 @@ function canTakePill(pill) {
     });
     //resolve(pillHistorySummary); //might have to move this to the end  
   })
-  }
+}
 
 function getLastPill(pill, callbackLastPill) {
   // deliver a callback pill object (pill.pill, pill.timestamp)
@@ -232,6 +266,9 @@ function pillsInLastDay(pill, callbackPillsInLastDay) {
 
   request.onsuccess = function(event) {
     var result = event.target.result;
+
+    const maxDosesPerDay = pillTypes[pill].maxDosesPerDay;
+
     // console.log('Values from the last 24 hours:', result);
   
     // iterate through and delete anything where result[i].pill !== pill
@@ -246,10 +283,10 @@ function pillsInLastDay(pill, callbackPillsInLastDay) {
     // console.log('Pruned values from the last 24 hours:', result);
   
     callbackThis.value = result.length;
-    if (result.length < 4) {
+    if (result.length < maxDosesPerDay) {
       callbackThis.timestamp = null;
     } else {
-      callbackThis.timestamp = result[3].timestamp; // the 4th entry
+      callbackThis.timestamp = result[maxDosesPerDay-1].timestamp; // the xth entry
       // console.log('Can take more at ', callbackThis.timestamp + ' plus 24 hours');
     }
   

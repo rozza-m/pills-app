@@ -1,18 +1,3 @@
-//Pill types are hardcoded for now
-const pillTypes = [{
-    name: 'Paracetemol',
-    hoursBetweenDoses: 4,
-    maxDosesPerDay: 4
-}, {
-    name: 'Ibuprofen',
-    hoursBetweenDoses: 4,
-    maxDosesPerDay: 3
-}, {
-    name: 'Oramorph',
-    hoursBetweenDoses: 4,
-    maxDosesPerDay: 3
-}];
-
 // Add event listeners
 var pills = document.querySelectorAll('.pill');
 var mask = document.querySelector('#mask');
@@ -98,9 +83,12 @@ for (var i = 0; i < pills.length; i++) {
         /*for (var j = 0; j < pills.length; j++) {
           pills[j].classList.remove('popped');
         }*/
-        history.pushState({}, 'dialog', `#record-dose-${this.dataset.pill}`);
 
-        console.log('Showing recorddose dialog for' + this.dataset)
+        const pill = this.dataset.pill;
+
+        history.pushState({}, 'dialog', `#record-dose-${pill}`);
+
+        console.log('Showing recorddose dialog for' + pill)
 
         //show dialog as modal
         dialog = document.querySelector('dialog.recorddose');
@@ -137,9 +125,10 @@ for (var i = 0; i < pills.length; i++) {
         ampmelement.innerHTML = ampm;
 
         //Populate content
-        canTakePill(this.dataset.pill).then((result)=>{
-            dialog.querySelector('header').innerHTML = this.dataset.pill;
-            dialog.dataset.pill = this.dataset.pill;
+        canTakePill(this.dataset.pill)
+            .then((result)=>{
+            dialog.querySelector('header').innerHTML = pill;
+            dialog.dataset.pill = pill;
 
             var guidance1 = dialog.querySelector('.guidance-part-1');
             var guidance2 = dialog.querySelector('.guidance-part-2');
@@ -162,9 +151,9 @@ for (var i = 0; i < pills.length; i++) {
                 dialog.querySelector('button.submit').classList.toggle('can-take', false);
                 dialog.querySelector('button.submit').classList.toggle('dont-take', true);
                 if (result.reason == 'hourLimitReached') {
-                    guidance1.innerHTML = 'Your last dose was less than 4 hours ago.';
+                    guidance1.innerHTML = 'Your last dose was less than ' + pillTypes[pill].hourLimit + ' hours ago.';
                 } else {
-                    guidance1.innerHTML = 'You\'ve recorded 4 or more doses in the last 24 hours.';
+                    guidance1.innerHTML = 'You\'ve recorded ' + pillTypes[pill].maxDosesPerDay + ' or more doses in the last 24 hours.';
                 }
                 guidance2.innerHTML = 'Advise waiting until ';
                 guidanceTime.innerHTML = result.canTakeMoreAt.toLocaleTimeString([], {
@@ -173,8 +162,24 @@ for (var i = 0; i < pills.length; i++) {
                     hour12: true
                 });
             }
-        }
-        );
+        })
+        .catch((error)=>{
+
+            console.log(error);
+
+            dialog.querySelector('header').innerHTML = this.dataset.pill;
+            dialog.dataset.pill = this.dataset.pill;
+
+            var guidance1 = dialog.querySelector('.guidance-part-1');
+            var guidance2 = dialog.querySelector('.guidance-part-2');
+            var guidanceTime = dialog.querySelector('.guidance-time');
+
+            guidance1.innerHTML = 'Something went wrong:';
+            guidance2.innerHTML = error;
+            guidanceTime.innerHTML = '';
+
+        });
+            
 
     });
 }
@@ -456,6 +461,7 @@ function updatePillStatusOnGrid() {
         }
         ).catch((error)=>{
             console.error('Error occurred while checking pill status:', error);
+            article.textContent = 'There was an error.';
         }
         );
     }
