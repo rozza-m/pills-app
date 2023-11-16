@@ -3,12 +3,11 @@
 One database
 
 An object store called system for general settings and things
-An object store called pillTypes containing the pill types in use
+An object store called pillsInUse containing the pill types in use
 One object store called history for consumption history
 */
 
 // Establish database if it doesn't already exist.
-version = 1;
 
 // Check for support.
 if (!('indexedDB' in window)) {
@@ -46,6 +45,25 @@ request.onupgradeneeded = function(event) {
   } else {
     console.log('pill index already exists.');
   }
+
+  //create object store for pills in use
+  if (!db.objectStoreNames.contains('pillsInUse')) {
+    db.createObjectStore('pillsInUse', { keyPath: 'pill' })
+    console.log('Created pillsInUse object store.');
+  } else {
+    console.log('pillsInUse object store already exists.');
+  }
+  };
+
+  request.onsuccess = function(event) {
+  db = event.target.result;
+  console.log('Database opened successfully.');
+
+  // Perform further operations with the opened database here
+  };
+
+  request.onerror = function(event) {
+  console.error('Failed to open database:', event.target.error);
 };
 
 request.onsuccess = function(event) {
@@ -82,6 +100,52 @@ const pillTypes = {
     maxDosesPerDay: 1,
   },
 };
+
+// Function to record that a pill type is in use in the "pill" store
+function addPillType(pill) {
+  console.log('addPillType ' + pill);
+  // Check incoming data for errors
+  if (!pill) {
+    console.log('Pill is empty');
+    return;
+  }
+
+  const tx = db.transaction('pillsInUse', 'readwrite');
+  const objectStore = tx.objectStore('pillsInUse');
+
+  const addRequest = objectStore.add({ pill });
+
+  addRequest.onsuccess = function() {
+    console.log('Successfully added ' + pill);
+  };
+
+  addRequest.onerror = function(event) {
+    console.error('Error adding ' + pill + ':', event.target.error);
+  };
+}
+
+// Function to remove a pill type from the "pill" store
+function removePillType(pill) {
+  console.log('removePillType ' + pill);
+  // Check incoming data for errors
+  if (!pill) {
+    console.log('Pill is empty');
+    return;
+  }
+
+  const tx = db.transaction('pillsInUse', 'readwrite');
+  const objectStore = tx.objectStore('pillsInUse');
+
+  const deleteRequest = objectStore.delete(pill);
+
+  deleteRequest.onsuccess = function() {
+    console.log('Successfully removed ' + pill);
+  };
+
+  deleteRequest.onerror = function(event) {
+    console.error('Error removing ' + pill + ':', event.target.error);
+  };
+}
 
 // Function to add a pill to history
 function addPillToHistory(pill, timestamp) {

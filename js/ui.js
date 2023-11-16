@@ -11,13 +11,13 @@ var dialog = document.querySelectorAll('dialog');
 var header = document.querySelector('body>header');
 
 
-// Add onLoad and timers
+//Add onLoad and timers
 window.onload = function() {
     waitForDBConnection().then((db)=>{
         // Perform any necessary operations with the database here
         // ...
 
-        updatePillStatusOnGrid();
+        buildGrid(); 
 
         // Run the function every 20 seconds
         setInterval(updatePillStatusOnGrid, 20000);
@@ -27,7 +27,43 @@ window.onload = function() {
     }
     );
 }
-;
+
+
+/* MUSTACHE BUILDING FUNCTIONS */
+
+function buildGrid() {
+    console.log('buildGrid');
+    const template = document.querySelector('#grid').innerHTML;
+
+    // Build list of pills from indexedDB pillsInUse record store
+    const pillList = [];
+    const pillsInUse = db.transaction('pillsInUse', 'readonly').objectStore('pillsInUse');
+
+    const request = pillsInUse.openCursor();
+    request.onsuccess = function (event) {
+        const cursor = event.target.result;
+        if (cursor) {
+            pillList.push(cursor.value);
+            cursor.continue();
+        } else {
+            console.log('buildGrid: loaded ' + pillList.length + ' pills, rendering grid now');
+            renderGrid(template, pillList);
+            updatePillStatusOnGrid();
+        }
+    };
+    request.onerror = function (event) {
+        console.error('Error opening cursor:', event.target.error);
+    };
+
+    console.log('buildGrid complete');
+}
+
+function renderGrid(template, pillList) {
+    console.log('   renderGrid');
+    const renderedHtml = mustache(template, pillList);
+    document.querySelector('#grid').innerHTML = renderedHtml;
+    console.log('   renderGrid complete');
+}
 
 /* EVENT HANDLERS */
 
@@ -432,6 +468,7 @@ function compileDoseAndSubmit() {
 
 //fill in the status of pills, for each pill on the grid.
 function updatePillStatusOnGrid() {
+    console.log('updatePillStatusOnGrid');
     const pills = Array.from(document.querySelectorAll('.pill'));
 
     pills.forEach((pill)=>{
@@ -466,6 +503,7 @@ function updatePillStatusOnGrid() {
         );
     }
     );
+    console.log('updatePillStatusOnGrid complete');
 }
 
 //crawl the history of pills and add them to the history list

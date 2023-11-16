@@ -24,7 +24,12 @@
           'css/pilltracker.css',
           'css/icons.css',
           'resources/reset.css',
-          'resources/Sora.ttf'
+          'resources/Sora.ttf',
+          'resources/mustache.min.js',
+          'js/ui.js',
+          'js/db.js',
+          'manifest.json'
+
         ];
   
         const cachePromises = urlsToCache.map((url) => {

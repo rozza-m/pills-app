@@ -85,35 +85,15 @@
 
         <main>
             <div id="grid">
-                <div class="pill can-take" id="Paracetamol" data-pill="Paracetamol">
+                {{#pill}}
+                <div class="pill can-take" id="{{pill}}" data-pill="{{pill}}">
                     <div class="big-button"><div class="icon"></div></div>
                     <div class="pill-text">
-                        <header>Paracetamol</header>
-                        <article>Don't take any more until</article>
+                        <header>{{pill}}</header>
+                        <article>--</article>
                     </div>
                 </div>
-                <div class="pill can-take" id="Ibuprofen" data-pill="Ibuprofen">
-                    <div class="big-button"><div class="icon"></div></div>
-                    <div class="pill-text">
-                        <header>Ibuprofen</header>
-                        <article>Don't take any more until</article>
-                    </div>
-                </div>
-                <div class="pill can-take" id="Oramorph" data-pill="Oramorph">
-                    <div class="big-button"><div class="icon"></div></div>
-                    <div class="pill-text">
-                        <header>Oramorph</header>
-                        <article>Don't take any more until</article>
-                    </div>
-                </div>
-                <div class="pill can-take" id="Dihydrocodeine" data-pill="Dihydrocodeine">
-                    <div class="big-button"><div class="icon"></div></div>
-                    <div class="pill-text">
-                        <header>Dihydrocodeine</header>
-                        <article>Don't take any more until</article>
-                    </div>
-                </div>
-
+                {{/pill}}
             </div>
             <div id="history">
                 <button id="email-history">Send via email</button>
@@ -123,45 +103,23 @@
             <div id="settings">
                 <p>
                     <h1>Medications</h1>
-                    <ul>
-                        <li -data-pill="Paracetamol">
-                            <span class="pill-name">Drug 1</span>
+                    <ul id="pill-list">
+                        {{#pill}}
+                        <li data-pill="{{pill}}">
+                            <span class="pill-name">{{pill}}</span>
                             <div class="pill-dosing-info">
-                                <p><span class="hours-between-doses">x</span> hours between doses</p>
-                                <p><span class="times-per-day">x</span> times per day</p>
+                                <p><span class="hours-between-doses">{{hours-between-doses}}</span> hours between doses</p>
+                                <p><span class="times-per-day">{{times-per-day}}</span> times per day</p>
                             </div>
                             <input type="checkbox"></input>
                         </li>
-                        <li -data-pill="Paracetamol">
-                            <span class="pill-name">Drug 1</span>
-                            <div class="pill-dosing-info">
-                                <p><span class="hours-between-doses">x</span> hours between doses</p>
-                                <p><span class="times-per-day">x</span> times per day</p>
-                            </div>
-                            <input type="checkbox"></input>
-                        </li>
-                        <li -data-pill="Paracetamol">
-                            <span class="pill-name">Drug 1</span>
-                            <div class="pill-dosing-info">
-                                <p><span class="hours-between-doses">x</span> hours between doses</p>
-                                <p><span class="times-per-day">x</span> times per day</p>
-                            </div>
-                            <input type="checkbox"></input>
-                        </li>
-                        <li -data-pill="Paracetamol">
-                            <span class="pill-name">Drug 1</span>
-                            <div class="pill-dosing-info">
-                                <p><span class="hours-between-doses">x</span> hours between doses</p>
-                                <p><span class="times-per-day">x</span> times per day</p>
-                            </div>
-                            <input type="checkbox"></input>
-                        </li>
+                        {{/pill}}
                     </ul>
                 <button id="clear-all">Clear all data</button>
             </div>
         </main>
     </body>
-    <!-- <script type="text/javascript" src="js/umd.js"></script> -->
+    <script type="text/javascript" src="resources/mustache.min.js"></script>
     <script type="text/javascript" src="js/ui.js"></script>
     <script type="text/javascript" src="js/db.js"></script>
 </html>
