@@ -80,22 +80,22 @@ request.onerror = function(event) {
 //Pill types are hardcoded for now
 const pillTypes = {
   Paracetamol: {
-    name: 'Paracetamol',
+    pill: 'Paracetamol',
     hoursBetweenDoses: 4,
     maxDosesPerDay: 4,
   },
   Ibuprofen: {
-    name: 'Ibuprofen',
+    pill: 'Ibuprofen',
     hoursBetweenDoses: 4,
     maxDosesPerDay: 3,
   },
   Oramorph: {
-    name: 'Oramorph',
+    pill: 'Oramorph',
     hoursBetweenDoses: 4,
     maxDosesPerDay: 3,
   },
   Dihydrocodeine: {
-    name: 'Dihydrocodeine',
+    pill: 'Dihydrocodeine',
     hoursBetweenDoses: 12,
     maxDosesPerDay: 1,
   },
@@ -113,7 +113,8 @@ function addPillType(pill) {
   const tx = db.transaction('pillsInUse', 'readwrite');
   const objectStore = tx.objectStore('pillsInUse');
 
-  const addRequest = objectStore.add({ pill });
+  //const addRequest = objectStore.add({ pill });
+  const addRequest = objectStore.add({ pill }, pill);
 
   addRequest.onsuccess = function() {
     console.log('Successfully added ' + pill);
@@ -145,6 +146,33 @@ function removePillType(pill) {
   deleteRequest.onerror = function(event) {
     console.error('Error removing ' + pill + ':', event.target.error);
   };
+}
+
+// Function to load the list of active pills. This is asynchronous
+function loadActivePillList() {
+  return new Promise((resolve, reject) => {
+      const pillList = [];
+      const pillsInUse = db.transaction('pillsInUse', 'readonly').objectStore('pillsInUse');
+
+      const request = pillsInUse.openCursor();
+      request.onsuccess = function (event) {
+          const cursor = event.target.result;
+          if (cursor) {
+              //pillList.push(cursor.value);
+              var pill = cursor.value;
+              pill.hoursBetweenDoses = pillTypes[pill.pill].hoursBetweenDoses;
+              pill.maxDosesPerDay = pillTypes[pill.pill].maxDosesPerDay;
+
+              pillList.push(pill);
+              cursor.continue();
+          } else {
+              resolve(pillList);
+          }
+      };
+      request.onerror = function (event) {
+          reject(event.target.error);
+      };
+  });
 }
 
 // Function to add a pill to history

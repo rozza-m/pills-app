@@ -85,15 +85,7 @@
 
         <main>
             <div id="grid">
-                {{#pill}}
-                <div class="pill can-take" id="{{pill}}" data-pill="{{pill}}">
-                    <div class="big-button"><div class="icon"></div></div>
-                    <div class="pill-text">
-                        <header>{{pill}}</header>
-                        <article>--</article>
-                    </div>
-                </div>
-                {{/pill}}
+                <!-- pill-grid-template goes here -->
             </div>
             <div id="history">
                 <button id="email-history">Send via email</button>
@@ -104,16 +96,7 @@
                 <p>
                     <h1>Medications</h1>
                     <ul id="pill-list">
-                        {{#pill}}
-                        <li data-pill="{{pill}}">
-                            <span class="pill-name">{{pill}}</span>
-                            <div class="pill-dosing-info">
-                                <p><span class="hours-between-doses">{{hours-between-doses}}</span> hours between doses</p>
-                                <p><span class="times-per-day">{{times-per-day}}</span> times per day</p>
-                            </div>
-                            <input type="checkbox"></input>
-                        </li>
-                        {{/pill}}
+                        <!-- pill-list-template goes here -->
                     </ul>
                 <button id="clear-all">Clear all data</button>
             </div>
@@ -122,4 +105,31 @@
     <script type="text/javascript" src="resources/mustache.min.js"></script>
     <script type="text/javascript" src="js/ui.js"></script>
     <script type="text/javascript" src="js/db.js"></script>
+    <script id="pill-grid-template" type="text/mustache">
+        {{^pill}}
+        <div>No pill available, go to settings to configure?!??</div>
+        {{/pill}}
+        {{#pill}}
+        <div class="pill can-take" id="{{pill}}" data-pill="{{pill}}">
+            <div class="big-button"><div class="icon"></div></div>
+            <div class="pill-text">
+                <header>{{pill}}</header>
+                <article>--</article>
+            </div>
+        </div>
+        {{/pill}}
+    </script>
+    <script id="pill-list-template" type="text/mustache">
+        {{#pill}}
+        <li data-pill="{{pill}}" {{#active}}class="active"{{/active}}>
+            <span class="pill-name">{{pill}}</span>
+            <div class="pill-dosing-info">
+                <p><span class="hours-between-doses">{{hoursBetweenDoses}}</span> hours between doses</p>
+                <p><span class="times-per-day">{{maxDosesPerDay}}</span> times per day</p>
+            </div>
+            <input type="checkbox" {{#active}}checked{{/active}}>
+        </li>
+        {{/pill}}
+    </script>
+
 </html>

@@ -300,6 +300,19 @@ div#grid {
     }
 
 
+div#no-pills-configured {
+  /* padding-bottom:2vh; */
+  color:var(--primary-1-dark);
+  max-width: 70vw;
+  text-align:center;
+  bottom:vh;
+}
+
+div#no-pills-configured h1{
+  margin-bottom:15vh;
+  font-size:3vh
+}
+
 /* button stuff */
 
 .pill .big-button,
@@ -393,14 +406,14 @@ dialog {
 }
 dialog header {
   height: 7.5vh;
-    background: var(--invert);
-    margin: 0;
-    text-align: center;
-    padding-top: 3vh;
-    font-size: 9vw;
-    font-weight: 600;
-    font-feature-settings: "ss01" 1, "onum" 1;
-    border-bottom: 0.4vh solid var(--primary-1-dark);
+  background: var(--invert);
+  margin: 0;
+  text-align: center;
+  padding-top: 3vh;
+  font-size: 9vw;
+  font-weight: 600;
+  font-feature-settings: "ss01" 1, "onum" 1;
+  border-bottom: 0.4vh solid var(--primary-1-dark);
 }
 
 
@@ -611,7 +624,7 @@ dialog button.submit .icon {
 }
 
 
-#history button, #settings button {
+#history button, #settings button, #no-pills-configured button {
     margin: auto;
     font-family: 'Sora';
     text-align: center;
@@ -722,8 +735,23 @@ input[type="checkbox"]:checked::after {
 #settings li {
     width: 100%;
     margin: 1.5vh 0;
+    box-sizing: border-box;
+    border-left: 0.5vh solid transparent;
+    padding-left:2vw;
+    transition: 0.5s font-weight, 2s border;
 }
 
 span.pill-name {
     font-size: 5vw;
+}
+
+#settings li.active {
+  border-left: 0.5vh solid var(--primary-1);
+  background: v;
+}
+
+li.active {}
+
+#settings li.active .pill-name {
+  font-weight:700;
 }

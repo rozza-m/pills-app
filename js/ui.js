@@ -1,5 +1,4 @@
 // Add event listeners
-var pills = document.querySelectorAll('.pill');
 var mask = document.querySelector('#mask');
 var ampmselector = document.querySelectorAll('.ampm .selector');
 var submitbutton = document.querySelectorAll('button.submit');
@@ -17,7 +16,7 @@ window.onload = function() {
         // Perform any necessary operations with the database here
         // ...
 
-        buildGrid(); 
+        renderGrid(); 
 
         // Run the function every 20 seconds
         setInterval(updatePillStatusOnGrid, 20000);
@@ -28,42 +27,6 @@ window.onload = function() {
     );
 }
 
-
-/* MUSTACHE BUILDING FUNCTIONS */
-
-function buildGrid() {
-    console.log('buildGrid');
-    const template = document.querySelector('#grid').innerHTML;
-
-    // Build list of pills from indexedDB pillsInUse record store
-    const pillList = [];
-    const pillsInUse = db.transaction('pillsInUse', 'readonly').objectStore('pillsInUse');
-
-    const request = pillsInUse.openCursor();
-    request.onsuccess = function (event) {
-        const cursor = event.target.result;
-        if (cursor) {
-            pillList.push(cursor.value);
-            cursor.continue();
-        } else {
-            console.log('buildGrid: loaded ' + pillList.length + ' pills, rendering grid now');
-            renderGrid(template, pillList);
-            updatePillStatusOnGrid();
-        }
-    };
-    request.onerror = function (event) {
-        console.error('Error opening cursor:', event.target.error);
-    };
-
-    console.log('buildGrid complete');
-}
-
-function renderGrid(template, pillList) {
-    console.log('   renderGrid');
-    const renderedHtml = mustache(template, pillList);
-    document.querySelector('#grid').innerHTML = renderedHtml;
-    console.log('   renderGrid complete');
-}
 
 /* EVENT HANDLERS */
 
@@ -77,6 +40,7 @@ header.addEventListener('click', function(event) {
             history.pushState({state: 'history'}, '', '#history');
             console.log('history');
         } else {
+            renderGrid(); 
             history.replaceState({}, '', '/');
             console.log('root');
         }
@@ -84,16 +48,19 @@ header.addEventListener('click', function(event) {
         //history.pushState({state: 'history'}, '', '#history');
     } else if (event.target.closest('#settings-menu-item')) {
         if(document.querySelector('body').classList.toggle('settings')){
+            renderSettingsPillsList();
             history.replaceState({}, '', '/'); //kill history so we're only one level from root
             history.pushState({state: 'settings'}, '', '#settings');
             console.log('settings');
         } else {
+            renderGrid(); 
             history.replaceState({}, '', '/');
             console.log('root');
         }
         document.querySelector('body').classList.toggle('history', false);
         
     } else {
+        renderGrid(); 
         document.querySelector('body').classList.toggle('history', false);
         document.querySelector('body').classList.toggle('settings', false);
         history.replaceState({}, '', '/'); //clear history, next press will exit
@@ -101,124 +68,6 @@ header.addEventListener('click', function(event) {
     
 })
 
-// //click on history menu item -> adds .history class to body (visibility is taken care of through css)
-// historymenuitem.addEventListener('click', function() {
-//     document.querySelector('body').classList.toggle('history');
-//     document.querySelector('body').classList.toggle('settings', false);
-// })
-
-// //click on settings menu item -> adds .settings class to body
-// settingsmenuitem.addEventListener('click', function() {
-//     document.querySelector('body').classList.toggle('history', false);
-//     document.querySelector('body').classList.toggle('settings');
-// })
-
-//click on each pill -> pops and fills time
-for (var i = 0; i < pills.length; i++) {
-    pills[i].addEventListener('click', function() {
-        /*for (var j = 0; j < pills.length; j++) {
-          pills[j].classList.remove('popped');
-        }*/
-
-        const pill = this.dataset.pill;
-
-        history.pushState({}, 'dialog', `#record-dose-${pill}`);
-
-        console.log('Showing recorddose dialog for' + pill)
-
-        //show dialog as modal
-        dialog = document.querySelector('dialog.recorddose');
-        dialog.showModal();
-
-        var dateelement = dialog.querySelector('.date .content');
-        var hourelement = dialog.querySelector('.hour .content');
-        var minuteelement = dialog.querySelector('.minute .content');
-        var ampmelement = dialog.querySelector('.ampm .content');
-
-        //date is relative
-        dateelement.setAttribute('data-day-offset', '0');
-        dateelement.innerHTML = 'Today';
-
-        //get current browser time in local timezone
-        var now = new Date();
-        //this is in local timezone
-        var hours = now.getHours();
-        var minutes = now.getMinutes();
-        //format and convert to 12h
-        var ampm = now.getHours() >= 12 ? 'pm' : 'am';
-        if (hours > 12) {
-            hours -= 12;
-        }
-        if (minutes < 10) {
-            minutes = '0' + minutes;
-        }
-
-        //set innerHTML of hourelement to current hour
-        hourelement.innerHTML = hours;
-        //set innerHTML of minuteelement to current minute
-        minuteelement.innerHTML = minutes;
-
-        ampmelement.innerHTML = ampm;
-
-        //Populate content
-        canTakePill(this.dataset.pill)
-            .then((result)=>{
-            dialog.querySelector('header').innerHTML = pill;
-            dialog.dataset.pill = pill;
-
-            var guidance1 = dialog.querySelector('.guidance-part-1');
-            var guidance2 = dialog.querySelector('.guidance-part-2');
-            var guidanceTime = dialog.querySelector('.guidance-time');
-
-            guidance1.innerHTML = '';
-            guidance2.innerHTML = '';
-            guidanceTime.innerHTML = '';
-
-            if (result.canTakePill) {
-                dialog.querySelector('button.submit').classList.toggle('can-take', true);
-                dialog.querySelector('button.submit').classList.toggle('dont-take', false);
-                if (result.lastTakenAt) {
-                    var timeAgo = new Date() - result.lastTakenAt;
-                    guidance1.innerHTML = 'Last taken ' + formatDuration(timeAgo);
-                } else {
-                    guidance1.innerHTML = 'No doses recorded yet';
-                }
-            } else {
-                dialog.querySelector('button.submit').classList.toggle('can-take', false);
-                dialog.querySelector('button.submit').classList.toggle('dont-take', true);
-                if (result.reason == 'hourLimitReached') {
-                    guidance1.innerHTML = 'Your last dose was less than ' + pillTypes[pill].hourLimit + ' hours ago.';
-                } else {
-                    guidance1.innerHTML = 'You\'ve recorded ' + pillTypes[pill].maxDosesPerDay + ' or more doses in the last 24 hours.';
-                }
-                guidance2.innerHTML = 'Advise waiting until ';
-                guidanceTime.innerHTML = result.canTakeMoreAt.toLocaleTimeString([], {
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
-                });
-            }
-        })
-        .catch((error)=>{
-
-            console.log(error);
-
-            dialog.querySelector('header').innerHTML = this.dataset.pill;
-            dialog.dataset.pill = this.dataset.pill;
-
-            var guidance1 = dialog.querySelector('.guidance-part-1');
-            var guidance2 = dialog.querySelector('.guidance-part-2');
-            var guidanceTime = dialog.querySelector('.guidance-time');
-
-            guidance1.innerHTML = 'Something went wrong:';
-            guidance2.innerHTML = error;
-            guidanceTime.innerHTML = '';
-
-        });
-            
-
-    });
-}
 
 //click on am/pm -> toggles
 for (var i = 0; i < ampmselector.length; i++) {
@@ -284,6 +133,204 @@ for (var i = 0; i < dialog.length; i++) {
 
 
 
+
+//click on each pill -> pops and fills time. This one is not called automatically because the list is built dynamically
+function addEventListenerToPills() {
+    var pills = document.querySelectorAll('.pill');
+    for (var i = 0; i < pills.length; i++) {
+        pills[i].addEventListener('click', function () {
+
+            const pill = this.dataset.pill;
+
+            history.pushState({}, 'dialog', `#record-dose-${pill}`);
+
+            console.log('Showing recorddose dialog for' + pill)
+
+            //show dialog as modal
+            dialog = document.querySelector('dialog.recorddose');
+            dialog.showModal();
+
+            var dateelement = dialog.querySelector('.date .content');
+            var hourelement = dialog.querySelector('.hour .content');
+            var minuteelement = dialog.querySelector('.minute .content');
+            var ampmelement = dialog.querySelector('.ampm .content');
+
+            //date is relative
+            dateelement.setAttribute('data-day-offset', '0');
+            dateelement.innerHTML = 'Today';
+
+            //get current browser time in local timezone
+            var now = new Date();
+            //this is in local timezone
+            var hours = now.getHours();
+            var minutes = now.getMinutes();
+            //format and convert to 12h
+            var ampm = now.getHours() >= 12 ? 'pm' : 'am';
+            if (hours > 12) {
+                hours -= 12;
+            }
+            if (minutes < 10) {
+                minutes = '0' + minutes;
+            }
+
+            //set innerHTML of hourelement to current hour
+            hourelement.innerHTML = hours;
+            //set innerHTML of minuteelement to current minute
+            minuteelement.innerHTML = minutes;
+
+            ampmelement.innerHTML = ampm;
+
+            //Populate content
+            canTakePill(this.dataset.pill)
+                .then((result) => {
+                    dialog.querySelector('header').innerHTML = pill;
+                    dialog.dataset.pill = pill;
+
+                    var guidance1 = dialog.querySelector('.guidance-part-1');
+                    var guidance2 = dialog.querySelector('.guidance-part-2');
+                    var guidanceTime = dialog.querySelector('.guidance-time');
+
+                    guidance1.innerHTML = '';
+                    guidance2.innerHTML = '';
+                    guidanceTime.innerHTML = '';
+
+                    if (result.canTakePill) {
+                        dialog.querySelector('button.submit').classList.toggle('can-take', true);
+                        dialog.querySelector('button.submit').classList.toggle('dont-take', false);
+                        if (result.lastTakenAt) {
+                            var timeAgo = new Date() - result.lastTakenAt;
+                            guidance1.innerHTML = 'Last taken ' + formatDuration(timeAgo);
+                        } else {
+                            guidance1.innerHTML = 'No doses recorded yet';
+                        }
+                    } else {
+                        dialog.querySelector('button.submit').classList.toggle('can-take', false);
+                        dialog.querySelector('button.submit').classList.toggle('dont-take', true);
+                        if (result.reason == 'hourLimitReached') {
+                            guidance1.innerHTML = 'Your last dose was less than ' + pillTypes[pill].hourLimit + ' hours ago.';
+                        } else {
+                            guidance1.innerHTML = 'You\'ve recorded ' + pillTypes[pill].maxDosesPerDay + ' or more doses in the last 24 hours.';
+                        }
+                        guidance2.innerHTML = 'Advise waiting until ';
+                        guidanceTime.innerHTML = result.canTakeMoreAt.toLocaleTimeString([], {
+                            hour: 'numeric',
+                            minute: '2-digit',
+                            hour12: true
+                        });
+                    }
+                })
+                .catch((error) => {
+
+                    console.log(error);
+
+                    dialog.querySelector('header').innerHTML = this.dataset.pill;
+                    dialog.dataset.pill = this.dataset.pill;
+
+                    var guidance1 = dialog.querySelector('.guidance-part-1');
+                    var guidance2 = dialog.querySelector('.guidance-part-2');
+                    var guidanceTime = dialog.querySelector('.guidance-time');
+
+                    guidance1.innerHTML = 'Something went wrong:';
+                    guidance2.innerHTML = error;
+                    guidanceTime.innerHTML = '';
+
+                });
+
+
+        });
+    }
+}
+
+//click on #pill-list li -> toggle pill active function. This one is not called automatically because the list is built dynamically
+function addEventListenerToSettingsList() {
+    var pills = document.querySelectorAll('#pill-list li');
+    for (var i = 0; i < pills.length; i++) {
+        pills[i].addEventListener('click', function (event) {
+            event.stopPropagation();
+            togglePillActive(this);
+        });
+    }
+}
+
+/* MUSTACHE BUILDING FUNCTIONS */
+
+function renderGrid() {
+    console.log('renderGrid');
+
+    //const template = document.querySelector('#grid').innerHTML;
+    const template = document.getElementById('pill-grid-template').innerHTML;
+
+    loadActivePillList()
+        .then((activePillList) => {
+            console.log('renderGrid: loaded ' + activePillList.length + ' pills, rendering grid now');
+            renderGridContent(template, activePillList);
+            addEventListenerToPills();
+            updatePillStatusOnGrid();
+        })
+        .catch((error) => {
+            console.error('Error occurred while loading active pill list:', error);
+        });
+
+    console.log('renderGrid complete');
+}
+
+function renderGridContent(template, pillList) {
+    console.log('  renderGridContent');
+    const renderedHtml = mustache(template, pillList);
+    if (renderedHtml) {
+        document.querySelector('#grid').innerHTML = renderedHtml;
+    } else {
+        // No pills are configured yet.
+        document.querySelector('#grid').innerHTML = '<div id="no-pills-configured"><h1>No medications set up yet</h1><button id="add-pill-button">Set up now</button>';
+        document.querySelector('#add-pill-button').addEventListener('click', function () {
+            document.querySelector('body').classList.toggle('settings')
+            renderSettingsPillsList();
+            history.replaceState({}, '', '/'); //kill history so we're only one level from root
+            history.pushState({state: 'settings'}, '', '#settings');
+            console.log('settings');
+        })
+        
+    }
+    console.log('  renderGridContent complete');
+}
+
+function renderSettingsPillsList() {
+    console.log('renderSettingsPillsList');
+
+    //const template = document.querySelector('#pill-list').innerHTML;
+    const template = document.getElementById('pill-list-template').innerHTML;
+    var pillList = pillTypes;
+
+    loadActivePillList()
+        .then((activePillList) => {
+            console.log('renderSettingsPillsList: loaded pills, ' + activePillList.length + ' pills in use, rendering list now');
+
+            for (const pillName in pillList) {
+                if (pillList.hasOwnProperty(pillName)) {
+                  const pill = pillList[pillName];
+                  // Perform operations with the pill object
+                  // Example: Add additional info active: true if pill is in activePillList
+                  pill.active = activePillList.some((activePill) => activePill.pill === pillName);
+                }
+              }
+            renderSettingsPillsListContent(template, pillList);
+            addEventListenerToSettingsList();
+        })
+        .catch((error) => {
+            console.error('Error occurred while loading active pill list:', error);
+        })
+
+    console.log('renderSettingsPillsList complete');
+}
+
+function renderSettingsPillsListContent(template, pillList) {
+    console.log('  renderSettingsPillsListContent');
+    const renderedHtml = mustache(template, Object.values(pillList));
+    document.querySelector('#pill-list').innerHTML = renderedHtml;
+    console.log('  renderSettingsPillsListContent complete');
+}
+
+
 /* BEHAVIOURS */
 
 //handle back button being pressed
@@ -312,9 +359,11 @@ window.onpopstate = function(event) {
   } else if (event.state.state === 'history') {
     console.log('Navigated to history');
     document.querySelector('body').classList.toggle('history', true);
+    fillHistory();
     document.querySelector('body').classList.toggle('settings', false);
   } else if (event.state.state === 'settings') {
     console.log('Navigated to settings');
+    renderSettingsPillsList();
     document.querySelector('body').classList.toggle('history', false);
     document.querySelector('body').classList.toggle('settings', true);
   } else {
@@ -588,5 +637,17 @@ function formatDuration(duration) {
         return `${hours}h ${remainingMinutes}min ago`;
     } else {
         return "more than 24h ago";
+    }
+}
+
+//set the pill to active or inactive
+function togglePillActive(pillLi) {
+    console.log('togglePillActive', pillLi.dataset.pill);
+    if (pillLi.classList.toggle('active')) { //returns true if it's turned to active
+        addPillType(pillLi.dataset.pill);
+        pillLi.querySelector('input').checked = true;
+    } else {
+        removePillType(pillLi.dataset.pill);
+        pillLi.querySelector('input').checked = false;
     }
 }
