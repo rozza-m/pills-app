@@ -14,7 +14,7 @@ if (!('indexedDB' in window)) {
   console.log("This browser doesn't support IndexedDB.");
 }
 
-const request = indexedDB.open('pilltracker', 3);
+const request = indexedDB.open('pilltracker', 4);
 let db; //scope cowboy
 
 request.onupgradeneeded = function(event) {
@@ -113,8 +113,8 @@ function addPillType(pill) {
   const tx = db.transaction('pillsInUse', 'readwrite');
   const objectStore = tx.objectStore('pillsInUse');
 
-  //const addRequest = objectStore.add({ pill });
-  const addRequest = objectStore.add({ pill }, pill);
+  const addRequest = objectStore.add({ pill });
+  //const addRequest = objectStore.add({ pill }, pill);
 
   addRequest.onsuccess = function() {
     console.log('Successfully added ' + pill);
