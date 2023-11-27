@@ -8,6 +8,7 @@ var leftselector = document.querySelectorAll('.leftselector');
 var rightselector = document.querySelectorAll('.rightselector');
 var dialog = document.querySelectorAll('dialog');
 var header = document.querySelector('body>header');
+var clearbutton = document.querySelector('button#clear-all');
 
 
 //Add onLoad and timers
@@ -129,6 +130,26 @@ for (var i = 0; i < dialog.length; i++) {
         }
     });
 }
+
+//click on clear all data -> clears all data
+clearbutton.addEventListener('click', function(event) {
+    // Close any open connections to the database
+    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ type: 'closeIndexedDBConnection' });
+    }
+    
+    // Delete the database
+    const request = indexedDB.deleteDatabase('yourDatabaseName');
+    request.onerror = function(event) {
+      console.error('Failed to delete the database', event.target.error);
+    };
+    request.onsuccess = function(event) {
+      console.log('Database deleted successfully');
+    
+      // Force a browser refresh
+      location.reload(true);
+    };
+})
 
 
 
