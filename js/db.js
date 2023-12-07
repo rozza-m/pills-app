@@ -193,6 +193,14 @@ function addPillToHistory(pill, timestamp) {
     };
 } 
 
+function deleteHistoryEntry(timestamp){
+  const tx = db.transaction('history', 'readwrite');
+  tx.objectStore('history').delete(timestamp);
+  tx.oncomplete = function () {
+    console.log('Deleted ' + timestamp);
+  };
+}
+
 // Function to check if another pill can be taken by looking back in history
 function canTakePill(pill) {
   return new Promise((resolve, reject) => {

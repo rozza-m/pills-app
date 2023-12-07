@@ -9,6 +9,8 @@ var rightselector = document.querySelectorAll('.rightselector');
 var dialog = document.querySelectorAll('dialog');
 var header = document.querySelector('body>header');
 var clearbutton = document.querySelector('button#clear-all');
+var deletebutton = document.querySelector('button.delete');
+var donebutton = document.querySelector('button#settings-done');
 
 
 //Add onLoad and timers
@@ -36,37 +38,28 @@ header.addEventListener('click', function(event) {
 
     if (event.target.closest('#history-menu-item')) {
         if(document.querySelector('body').classList.toggle('history')) {
-            fillHistory();
-            history.replaceState({}, '', '/'); //kill history so we're only one level from root
-            history.pushState({state: 'history'}, '', '#history');
-            console.log('history');
+            showAndPushHistorypage();
         } else {
-            renderGrid(); 
-            history.replaceState({}, '', '/');
-            console.log('root');
+            showAndPopRoot();
         }
         document.querySelector('body').classList.toggle('settings', false);
-        //history.pushState({state: 'history'}, '', '#history');
     } else if (event.target.closest('#settings-menu-item')) {
         if(document.querySelector('body').classList.toggle('settings')){
-            renderSettingsPillsList();
-            history.replaceState({}, '', '/'); //kill history so we're only one level from root
-            history.pushState({state: 'settings'}, '', '#settings');
-            console.log('settings');
+            showAndPushSettingsPage()
         } else {
-            renderGrid(); 
-            history.replaceState({}, '', '/');
-            console.log('root');
+            showAndPopRoot();
         }
-        document.querySelector('body').classList.toggle('history', false);
+        document.querySelector('body').classList.toggle('history', false); //if box
         
     } else {
-        renderGrid(); 
-        document.querySelector('body').classList.toggle('history', false);
-        document.querySelector('body').classList.toggle('settings', false);
-        history.replaceState({}, '', '/'); //clear history, next press will exit
+        showAndPopRoot();
     }
     
+})
+
+donebutton.addEventListener('click', function() {
+    document.querySelector('body').classList.toggle('settings', false);
+    showAndPopRoot();
 })
 
 
@@ -122,14 +115,17 @@ for (var i = 0; i < submitbutton.length; i++) {
 
 //click on dialog -> check if click was inside dialog area
 for (var i = 0; i < dialog.length; i++) {
-    dialog[i].addEventListener('click', function(event) {
-        const dialogRect = dialog.getBoundingClientRect();
-        const isInsideDialog = (event.clientX >= dialogRect.left && event.clientX <= dialogRect.right && event.clientY >= dialogRect.top && event.clientY <= dialogRect.bottom)
+    (function(index) {
+      var dialogArray = Array.from(dialog); // Convert array-like object to array
+      dialogArray[index].addEventListener('click', function(event) {
+        const dialogRect = dialogArray[index].getBoundingClientRect();
+        const isInsideDialog = (event.clientX >= dialogRect.left && event.clientX <= dialogRect.right && event.clientY >= dialogRect.top && event.clientY <= dialogRect.bottom);
         if (!isInsideDialog) {
-            destroyDialog(true);
+          destroyDialog(true);
         }
-    });
-}
+      });
+    })(i);
+  }
 
 //click on clear all data -> clears all data
 clearbutton.addEventListener('click', function(event) {
@@ -151,9 +147,16 @@ clearbutton.addEventListener('click', function(event) {
     };
 })
 
+//click on delete button -> removes from history
+deletebutton.addEventListener('click', function(event) {
+    destroyDialog(true);
+    deleteHistoryEntry(this.dataset.time);
+    fillHistory();
+})
 
 
 
+//event listeners that are added dynamically
 
 //click on each pill -> pops and fills time. This one is not called automatically because the list is built dynamically
 function addEventListenerToPills() {
@@ -228,7 +231,7 @@ function addEventListenerToPills() {
                         dialog.querySelector('button.submit').classList.toggle('can-take', false);
                         dialog.querySelector('button.submit').classList.toggle('dont-take', true);
                         if (result.reason == 'hourLimitReached') {
-                            guidance1.innerHTML = 'Your last dose was less than ' + pillTypes[pill].hourLimit + ' hours ago.';
+                            guidance1.innerHTML = 'Your last dose was less than ' + pillTypes[pill].hoursBetweenDoses + ' hours ago.';
                         } else {
                             guidance1.innerHTML = 'You\'ve recorded ' + pillTypes[pill].maxDosesPerDay + ' or more doses in the last 24 hours.';
                         }
@@ -271,6 +274,33 @@ function addEventListenerToSettingsList() {
             togglePillActive(this);
         });
     }
+}
+
+//click on any history entry #history div.pill-row -> update info in dialog and show as modal
+function addEventListenerToHistoryEntry() {
+    var pills = document.querySelectorAll('#history div.pill-row-container');
+    for (var i = 0; i < pills.length; i++) {
+        pills[i].addEventListener('click', function (event) {
+            event.stopPropagation();
+            showClearHistoryModal(this.dataset.pill, this.dataset.timestamp, this.dataset.friendlyTime);
+        });
+    }
+}
+
+function showClearHistoryModal(pill, timestamp, friendlyTime) {
+    console.log('showClearHistoryModal');
+    console.log('pill: ' + pill);
+    console.log('timestamp: ' + timestamp);
+    console.log('friendlyTime: ' + friendlyTime);
+
+    clearHistoryModal = document.querySelector('dialog.deletepillfromhistory');
+
+    clearHistoryModal.querySelector('#pill-name').innerHTML = pill;
+    clearHistoryModal.querySelector('#pill-time').innerHTML = friendlyTime;
+    clearHistoryModal.querySelector('button.delete').dataset.time = timestamp;
+
+    clearHistoryModal.showModal();
+
 }
 
 /* MUSTACHE BUILDING FUNCTIONS */
@@ -351,6 +381,26 @@ function renderSettingsPillsListContent(template, pillList) {
     console.log('  renderSettingsPillsListContent complete');
 }
 
+/* NAVIGATION */
+function showAndPushHistorypage() { //this doesn't actually change the body class
+    fillHistory();
+    history.replaceState({}, '', '/'); //kill history so we're only one level from root
+    history.pushState({state: 'history'}, '', '#history');
+    console.log('history');
+}
+
+function showAndPushSettingsPage() { //this doesn't actually change the body class
+    renderSettingsPillsList();
+    history.replaceState({}, '', '/'); //kill history so we're only one level from root
+    history.pushState({state: 'settings'}, '', '#settings');
+    console.log('settings');
+}
+
+function showAndPopRoot(){ //this doesn't actually change the body class
+    renderGrid(); 
+    history.replaceState({}, '', '/');
+    console.log('root');
+}
 
 /* BEHAVIOURS */
 
@@ -632,6 +682,7 @@ function createHistoryDivs(historyData) {
   
       // Create a div for the pill and timestamp
       const pillDiv = document.createElement('div');
+      pillDiv.classList.add('pill-row-container');
       //pillDiv.textContent = `Pill: ${pill} | Timestamp: ${timestamp}`;
       const timeString = new Date(timestamp).toLocaleTimeString([], {
         hour: 'numeric',
@@ -639,8 +690,13 @@ function createHistoryDivs(historyData) {
         hour12: true
         });
       pillDiv.innerHTML = `<div class="pill-row"><span class="history-pill">${pill}</span><span class="history-time">${timeString}</span></div>`;
+      pillDiv.dataset.pill = pill;
+      pillDiv.dataset.timestamp = timestamp;
+      pillDiv.dataset.friendlyTime = dayText + ' at ' + timeString;
       historyContainer.appendChild(pillDiv);
     });
+
+    addEventListenerToHistoryEntry();
   }
 
 
