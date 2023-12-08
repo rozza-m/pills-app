@@ -13,6 +13,8 @@ var deletebutton = document.querySelector('button.delete');
 var donebutton = document.querySelector('button#settings-done');
 
 
+var initialUrl = window.location.href;
+
 //Add onLoad and timers
 window.onload = function() {
     waitForDBConnection().then((db)=>{
@@ -384,21 +386,21 @@ function renderSettingsPillsListContent(template, pillList) {
 /* NAVIGATION */
 function showAndPushHistorypage() { //this doesn't actually change the body class
     fillHistory();
-    history.replaceState({}, '', '/'); //kill history so we're only one level from root
-    history.pushState({state: 'history'}, '', '#history');
+    history.replaceState({}, '', initialUrl); //kill history so we're only one level from root
+    history.pushState({state: 'history'}, '', initialUrl + '#history');
     console.log('history');
 }
 
 function showAndPushSettingsPage() { //this doesn't actually change the body class
     renderSettingsPillsList();
-    history.replaceState({}, '', '/'); //kill history so we're only one level from root
-    history.pushState({state: 'settings'}, '', '#settings');
+    history.replaceState({}, '', initialUrl); //kill history so we're only one level from root
+    history.pushState({state: 'settings'}, '', initialUrl + '#settings');
     console.log('settings');
 }
 
 function showAndPopRoot(){ //this doesn't actually change the body class
     renderGrid(); 
-    history.replaceState({}, '', '/');
+    history.replaceState({}, '', initialUrl);
     console.log('root');
 }
 
