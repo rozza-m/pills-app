@@ -624,8 +624,9 @@ dialog button.submit .icon {
   /*margin:auto;*/
 }
 
-
-#history button, #settings button, #no-pills-configured button, dialog.deletepillfromhistory button {
+/*
+#history button, #settings button, #no-pills-configured button, dialog.deletepillfromhistory button {*/
+button{
     margin: auto;
     font-family: 'Sora';
     text-align: center;
@@ -694,7 +695,7 @@ div#history-list {
     box-shadow: inset 0.2vh 0.2vh 0 rgba(0,0,0,0.4);
 }
 
-dialog.deletepillfromhistory button.delete {
+dialog button.generic-action {
     width: auto;
     padding-left: 4vw;
     padding-right:4vw;
@@ -771,12 +772,11 @@ input[type="checkbox"]:checked::after {
 }
 
 span.pill-name, .pill-dosing-info {
-    font-size: 5vw;
+    font-size: 4vw;
 }
 
 #settings li.active {
   border-left: 0.5vh solid var(--primary-1);
-  background: v;
 }
 
 #settings li.active .pill-name {

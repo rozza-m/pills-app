@@ -77,8 +77,15 @@
                 <div id="pill-name" class="guidance guidance-time">Paracetamol</div>
                 <div id="pill-time" class="guidance">Yesterday at 12:24pm</div>
             </div>
-            <button class="delete">Delete from history</button>
+            <button class="generic-action delete">Delete from history</button>
         </dialog>
+
+        <dialog class="clearall">
+            <div class="guidance guidance-time">Delete everything?</div>
+            <div id="pill-time" class="guidance">This will clear your history and configured pills.</div>
+        </div>
+        <button class="generic-action clear-all">Delete from history</button>
+    </dialog>
 
 
         <header>
@@ -105,7 +112,7 @@
                         <!-- pill-list-template goes here -->
                     </ul>
                 <button id="settings-done" class="button-preferred">Done</button>   
-                <button id="clear-all">Clear all data</button>
+                <button id="clear-all-show-dialog">Clear all data</button>
             </div>
         </main>
     </body>

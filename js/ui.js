@@ -11,6 +11,7 @@ var header = document.querySelector('body>header');
 var clearbutton = document.querySelector('button#clear-all');
 var deletebutton = document.querySelector('button.delete');
 var donebutton = document.querySelector('button#settings-done');
+var clearrequestbutton = document.querySelector('button#clear-all-show-dialog');
 
 
 //sort out initial url
@@ -140,24 +141,21 @@ for (var i = 0; i < dialog.length; i++) {
     })(i);
   }
 
+//click on clearrequestbutton -> show clear dialog
+clearrequestbutton.addEventListener('click', function(event) {
+    history.pushState({}, '', '#clearalldialog');
+
+            console.log('Showing clear all dialog');
+
+            //show dialog as modal
+            dialog = document.querySelector('dialog.clearall');
+            dialog.showModal();
+})
+
 //click on clear all data -> clears all data
 clearbutton.addEventListener('click', function(event) {
-    // Close any open connections to the database
-    if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage({ type: 'closeIndexedDBConnection' });
-    }
-    
-    // Delete the database
-    const request = indexedDB.deleteDatabase('yourDatabaseName');
-    request.onerror = function(event) {
-      console.error('Failed to delete the database', event.target.error);
-    };
-    request.onsuccess = function(event) {
-      console.log('Database deleted successfully');
-    
-      // Force a browser refresh
-      location.reload(true);
-    };
+    clearAllData();
+    //this also reloads app
 })
 
 //click on delete button -> removes from history
@@ -305,6 +303,8 @@ function showClearHistoryModal(pill, timestamp, friendlyTime) {
     console.log('pill: ' + pill);
     console.log('timestamp: ' + timestamp);
     console.log('friendlyTime: ' + friendlyTime);
+
+    history.pushState({}, 'dialog', '#clear-history-'+timestamp);
 
     clearHistoryModal = document.querySelector('dialog.deletepillfromhistory');
 

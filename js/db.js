@@ -439,3 +439,22 @@ function waitForDBConnection() {
     };
   });
 }
+
+function clearAllData(){
+      // Close any open connections to the database
+      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({ type: 'closeIndexedDBConnection' });
+      }
+      
+      // Delete the database
+      const request = indexedDB.deleteDatabase('pilltracker');
+      request.onerror = function(event) {
+        console.error('Failed to delete the database', event.target.error);
+      };
+      request.onsuccess = function(event) {
+        console.log('Database deleted successfully');
+      
+        // Force a browser refresh
+        location.reload(true);
+      };
+}
