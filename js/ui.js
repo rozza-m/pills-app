@@ -13,7 +13,16 @@ var deletebutton = document.querySelector('button.delete');
 var donebutton = document.querySelector('button#settings-done');
 
 
+//sort out initial url
 var initialUrl = window.location.href;
+//test for hashes
+if (initialUrl.includes('#')) {
+    //remove everything including and after it
+    initialUrl = initialUrl.split('#')[0];
+    //replace initial url
+    history.replaceState({}, '', initialUrl);
+}
+
 
 //Add onLoad and timers
 window.onload = function() {
@@ -54,6 +63,8 @@ header.addEventListener('click', function(event) {
         document.querySelector('body').classList.toggle('history', false); //if box
         
     } else {
+        document.querySelector('body').classList.toggle('history', false);
+        document.querySelector('body').classList.toggle('settings', false);
         showAndPopRoot();
     }
     
