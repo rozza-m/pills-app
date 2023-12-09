@@ -440,21 +440,48 @@ function waitForDBConnection() {
   });
 }
 
-function clearAllData(){
-      // Close any open connections to the database
-      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
-        navigator.serviceWorker.controller.postMessage({ type: 'closeIndexedDBConnection' });
-      }
-      
-      // Delete the database
-      const request = indexedDB.deleteDatabase('pilltracker');
-      request.onerror = function(event) {
-        console.error('Failed to delete the database', event.target.error);
+function clearAllData() {
+  console.log('  clearAllData');
+
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('pilltracker');
+    console.log('   requested to open the database');
+    request.onsuccess = function(event) {
+      console.log('    opened the database');
+      const db = event.target.result;
+
+      db.onversionchange = function() {
+        db.close();
+        console.log('   closed the database');
       };
-      request.onsuccess = function(event) {
-        console.log('Database deleted successfully');
-      
-        // Force a browser refresh
+
+      const deleteRequest = indexedDB.deleteDatabase('pilltracker');
+      console.log('   requested to delete the database');
+
+      deleteRequest.onerror = function(event) {
+        console.error('    Failed to delete the database', event.target.error);
+        reject(event.target.error);
+      };
+
+      deleteRequest.onsuccess = function(event) {
+        console.log('    Database deleted successfully');
+
+        // Refresh the page after the database has been deleted
         location.reload(true);
+        resolve();
       };
+
+      deleteRequest.onblocked = function(event) {
+        console.error('    Unable to delete the database because it is still open by other connections');
+        location.reload(true);
+        reject(new Error('Database deletion blocked'));
+
+      };
+    };
+
+    request.onerror = function(event) {
+      console.error('    Failed to open the database', event.target.error);
+      reject(event.target.error);
+    };
+  });
 }
